@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JanJa Myon - Optimized A4 Menu</title>
+    <title>JanJa Myon - Updated A4 Menu</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- PDF татаж авахад зориулсан сан -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap');
         
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #e5e5e5;
             margin: 0;
-            padding: 0;
+            padding: 20px 0;
             display: flex;
             justify-content: center;
         }
@@ -31,6 +34,7 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         @media print {
@@ -40,6 +44,7 @@
             }
             body {
                 background: white;
+                padding: 0;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
@@ -54,12 +59,15 @@
             }
         }
 
+        /* 3 багана, 5 мөр (Нийт 15 нүд) */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 6px; 
+            grid-template-rows: repeat(5, 1fr);
+            gap: 5px; 
             flex-grow: 1;
-            margin-top: 6px;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
         .food-card {
@@ -72,54 +80,60 @@
             height: 100%;
         }
 
+        /* Зургийн өндрийг 5 мөр багтахаар тохируулсан */
         .food-img {
-            height: 225px; 
+            height: 110px; 
             width: 100%;
             object-fit: cover;
             background: #fdfdfd;
+            border-bottom: 1px solid #f5f5f5;
         }
 
         .food-info {
-            padding: 3px 8px 2px 8px; 
+            padding: 3px 6px; 
             display: flex;
             flex-direction: column;
-            justify-content: center; 
             flex-grow: 1;
+        }
+
+        .food-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+
+        .food-desc {
+            font-size: 0.55rem;
+            color: #555;
+            margin: 0;
+            font-style: italic;
+            line-height: 1.15;
+            /* Урт текстийг 2 мөрөнд таслах */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .price-tag {
             color: #d32f2f;
             font-weight: 800;
-            font-size: 1.15rem;
+            font-size: 0.95rem;
             line-height: 1;
-            margin-top: 1px;
-        }
-
-        .food-title {
-            font-size: 0.82rem;
-            font-weight: 700;
-            line-height: 1;
-            color: #1a1a1a;
-            margin-bottom: 1px;
-        }
-
-        .food-desc {
-            font-size: 0.62rem;
-            color: #666;
-            margin: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-style: italic;
+            margin-top: auto; /* Доош нь шахах */
+            padding-top: 2px;
         }
 
         .multi-price {
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             font-weight: 700;
             color: #d32f2f;
             display: flex;
             flex-direction: column;
             gap: 1px;
+            margin-top: auto;
         }
 
         .multi-price span {
@@ -142,134 +156,205 @@
 
     <div class="a4-page" id="menu-content">
         <!-- Толгой хэсэг -->
-        <header class="flex justify-between items-center border-b-2 border-red-600 pb-1.5">
+        <header class="flex justify-between items-end border-b-2 border-red-600 pb-1.5 shrink-0">
             <div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-4xl font-extrabold text-red-700 tracking-tighter">JanJa</span>
-                    <span class="text-4xl font-light text-gray-800 tracking-tight border-l-2 border-gray-200 pl-2">Myon</span>
+                <div class="flex items-center space-x-1">
+                    <span class="text-3xl font-black text-red-700 tracking-tighter">JanJa</span>
+                    <span class="text-3xl font-light text-gray-800 tracking-tight border-l-2 border-gray-300 pl-1">Myon</span>
                 </div>
-                <p class="text-[9.5px] text-red-600 font-extrabold uppercase tracking-tight mt-0.5">Тусгай жороор хийсэн жан болон гоймонгийн хослолыг мэдрээрэй</p>
+                <p class="text-[9px] text-red-600 font-black uppercase tracking-tighter mt-0.5">K-Drama дээрх яг л тэр амтыг манайхаас...</p>
             </div>
             <div class="text-right">
-                <p class="font-extrabold text-gray-900 text-xl leading-none"><i class="fas fa-phone-alt text-red-600 mr-1"></i> 9090-8772</p>
-                <p class="text-[9px] text-gray-500 mt-0.5 font-medium">100 айлын урд буудал, BSB эсрэг талд</p>
+                <p class="font-black text-gray-900 text-xl leading-none"><i class="fas fa-phone-alt text-red-600 mr-1"></i> 9090-8772</p>
+                <div class="flex items-center justify-end gap-1 text-[8px] font-bold text-gray-600 mt-1">
+                    <i class="fab fa-facebook text-blue-600"></i>
+                    <span>JanJa Myon Official</span>
+                </div>
             </div>
         </header>
 
-        <!-- Хоолны цэс -->
+        <!-- Хоолны цэс (14 хоол + 1 Урамшууллын нүд) -->
         <main class="menu-grid">
+            <!-- 1 -->
             <div class="food-card featured-border">
-                <img src="https://lh3.googleusercontent.com/d/12mmrZ4hkqtU9A6kzVdfQ9-vqnvKRnm0n" class="food-img" alt="">
+                <img src="https://lh3.googleusercontent.com/d/12mmrZ4hkqtU9A6kzVdfQ9-vqnvKRnm0n" class="food-img" alt="Жантай Гоймон" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Janjamyon'">
                 <div class="food-info">
                     <h3 class="food-title text-red-700">1. Жантай Гоймон</h3>
-                    <p class="food-desc italic">Хар буурцгийн сүмстэй гоймон</p>
-                    <p class="price-tag">15,000₮</p>
-                </div>
-            </div>
-
-            <div class="food-card">
-                <img src="https://lh3.googleusercontent.com/d/1Tjse4It6GgDzYPNC97rZ0YMWQiG8r3cl" class="food-img" alt="">
-                <div class="food-info">
-                    <h3 class="food-title">2. Бугымбаб</h3>
-                    <p class="food-desc italic">Өндөгтэй хуурсан будаа</p>
+                    <p class="food-desc">Уламжлалт хар буурцгийн сүмстэй амтат гоймон.</p>
                     <p class="price-tag">17,000₮</p>
                 </div>
             </div>
 
+            <!-- 2 -->
             <div class="food-card">
-                <img src="https://lh3.googleusercontent.com/d/1IRh-dC533BVmRrb5BPgXhfaBfkXFZIbT" class="food-img" alt="">
+                <img src="https://lh3.googleusercontent.com/d/1Tjse4It6GgDzYPNC97rZ0YMWQiG8r3cl" class="food-img" alt="Бугымбаб" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Bugymbap'">
+                <div class="food-info">
+                    <h3 class="food-title">2. Бугымбаб</h3>
+                    <p class="food-desc">Жантай, өндөгтэй хуурсан будаа.</p>
+                    <p class="price-tag">19,000₮</p>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="food-card">
+                <img src="https://lh3.googleusercontent.com/d/1IRh-dC533BVmRrb5BPgXhfaBfkXFZIbT" class="food-img" alt="Бугжажан" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Bugjajang'">
                 <div class="food-info">
                     <h3 class="food-title">3. Бугжажан</h3>
-                    <p class="food-desc italic">Тусгай жороор бэлтгэсэн сет</p>
-                    <p class="price-tag">19,800₮</p>
+                    <p class="food-desc">Тусгай жороор бэлтгэсэн амтат Жантай гоймонгийн сет.</p>
+                    <p class="price-tag">21,800₮</p>
                 </div>
             </div>
 
+            <!-- 4 -->
             <div class="food-card">
-                <img src="https://lh3.googleusercontent.com/d/1qvx0r3VOJf3q_TzJ7UU_VS19JvIYKACW" class="food-img" alt="">
+                <img src="https://lh3.googleusercontent.com/d/1qvx0r3VOJf3q_TzJ7UU_VS19JvIYKACW" class="food-img" alt="Honey Garlic Chicken" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Honey+Garlic'">
                 <div class="food-info">
                     <h3 class="food-title">4. Honey Garlic Chicken</h3>
-                    <p class="food-desc text-[0.55rem]">Зөгийн бал, сармистай чихэрлэг тахиа</p>
-                    <div class="multi-price mt-1">
-                        <span>M: 1 будаа, шарсан төмс <b class="ml-1 text-[0.7rem]">22k</b></span>
-                        <span>L: 2хүн, 2будаа, төмс <b class="ml-1 text-[0.7rem]">38k</b></span>
+                    <p class="food-desc">Зөгийн бал, сармистай чихэрлэг тахиа</p>
+                    <div class="multi-price">
+                        <span>M: 1 будаа, төмс <b class="ml-1 text-[0.65rem]">24k</b></span>
+                        <span>L: 2хүн, 2будаа, төмс <b class="ml-1 text-[0.65rem]">40k</b></span>
                     </div>
                 </div>
             </div>
 
+            <!-- 5 -->
             <div class="food-card">
-                <img src="https://lh3.googleusercontent.com/d/1m0McF8JwscUYwKCfZrD8q4iyCULV78Ne" class="food-img" alt="">
+                <img src="https://lh3.googleusercontent.com/d/1m0McF8JwscUYwKCfZrD8q4iyCULV78Ne" class="food-img" alt="Бүрж шарсан тахиа" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Fried+Chicken'">
                 <div class="food-info">
                     <h3 class="food-title">5. Бүрж шарсан тахиа</h3>
-                    <p class="food-desc text-[0.55rem]">Fried Chicken (Шаржигнуур тахиа)</p>
-                    <div class="multi-price mt-1">
-                        <span>M: 1 будаа, шарсан төмс <b class="ml-1 text-[0.7rem]">20k</b></span>
-                        <span>L: 2хүн, 2будаа, төмс <b class="ml-1 text-[0.7rem]">36k</b></span>
+                    <p class="food-desc">Fried Chicken (Шаржигнуур тахиа)</p>
+                    <div class="multi-price">
+                        <span>M: 1 будаа, төмс <b class="ml-1 text-[0.65rem]">22k</b></span>
+                        <span>L: 2хүн, 2будаа, төмс <b class="ml-1 text-[0.65rem]">38k</b></span>
                     </div>
                 </div>
             </div>
 
+            <!-- 6 -->
             <div class="food-card">
-                <img src="https://lh3.googleusercontent.com/d/1IwZ90chVrklFTmtD3QhdaG35uMC5eSKH" class="food-img" alt="">
+                <img src="https://lh3.googleusercontent.com/d/1IwZ90chVrklFTmtD3QhdaG35uMC5eSKH" class="food-img" alt="Амтат Бууз" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Buuz'">
                 <div class="food-info">
                     <h3 class="food-title">6. Амтат Бууз (10ш)</h3>
-                    <p class="food-desc text-[0.55rem]">Хоний мах, сонгинотой амтат уурын бууз</p>
-                    <p class="price-tag mt-0.5">18,000₮</p>
+                    <p class="food-desc">Хоний мах, сонгинотой амтат уурын бууз.</p>
+                    <p class="price-tag">20,000₮</p>
                 </div>
             </div>
 
+            <!-- 7 -->
             <div class="food-card">
-                <img src="https://lh3.googleusercontent.com/d/1OJCO817jK95p_zcrcPod3RobL4jUHbY-" class="food-img" alt="">
+                <img src="https://lh3.googleusercontent.com/d/1OJCO817jK95p_zcrcPod3RobL4jUHbY-" class="food-img" alt="Бугжамён" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Bugjamyon'">
                 <div class="food-info">
                     <h3 class="food-title">7. Бугжамён</h3>
                     <p class="food-desc">Амтат хачир болон гоймонгийн хослол.</p>
-                    <p class="price-tag mt-0.5">19,800₮</p>
+                    <p class="price-tag">21,800₮</p>
                 </div>
             </div>
 
+            <!-- 8 -->
             <div class="food-card">
-                <img src="https://lh3.googleusercontent.com/d/1z5nB22nM5DrRNpV7kxCqNtkchAtCUTvl" class="food-img" alt="">
+                <img src="https://lh3.googleusercontent.com/d/1z5nB22nM5DrRNpV7kxCqNtkchAtCUTvl" class="food-img" alt="Жампун" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Jampong'">
                 <div class="food-info">
                     <h3 class="food-title">8. Жампун 🌶️</h3>
                     <p class="food-desc">Халуун ногоотой, далайн гаралтай бүтээгдэхүүнтэй шөл.</p>
-                    <p class="price-tag mt-0.5">18,000₮</p>
+                    <p class="price-tag">20,000₮</p>
                 </div>
             </div>
 
+            <!-- 9 -->
             <div class="food-card">
-                <img src="https://lh3.googleusercontent.com/d/1f3RcMLC5XsvLHo7nwPu4I09wEjJJS02h" class="food-img" alt="">
+                <img src="https://lh3.googleusercontent.com/d/1f3RcMLC5XsvLHo7nwPu4I09wEjJJS02h" class="food-img" alt="Жамжамён" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Jamjamyon'">
                 <div class="food-info">
                     <h3 class="food-title">9. Жамжамён</h3>
-                    <p class="food-desc">Хоёр амтыг нэг дор! Жантай болон Жампун хослол.</p>
-                    <p class="price-tag mt-0.5">19,800₮</p>
+                    <p class="food-desc">Хоёр амтыг нэг дор! Жантай болон Жампун гоймонгийн хослол.</p>
+                    <p class="price-tag">21,800₮</p>
+                </div>
+            </div>
+
+            <!-- 10 -->
+            <div class="food-card">
+                <img src="Gemini_Generated_Image_uftn38uftn38uftn.png" class="food-img" alt="Танжампун сэт" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Tanjampong+Set'">
+                <div class="food-info">
+                    <h3 class="food-title">10. Танжампун сэт</h3>
+                    <p class="food-desc">Тансуюуг, Жанпун, Жантай гоймон * 3-4 хүний сэт</p>
+                    <p class="price-tag">59,000₮</p>
+                </div>
+            </div>
+
+            <!-- 11 -->
+            <div class="food-card">
+                <img src="Gemini_Generated_Image_ij4bu6ij4bu6ij4b.png" class="food-img" alt="Тансуюуг" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Tansuyuk'">
+                <div class="food-info">
+                    <h3 class="food-title">11. Тансуюуг</h3>
+                    <p class="food-desc">Чихэрлэг соустай шарсан гахайн мах</p>
+                    <div class="multi-price">
+                        <span>M: 1 хүний порц <b class="ml-1 text-[0.65rem]">24k</b></span>
+                        <span>L: 2 хүний порц <b class="ml-1 text-[0.65rem]">46k</b></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12 -->
+            <div class="food-card">
+                <img src="620f8b74-4873-4a8e-8193-5c2febea385c.png" class="food-img" alt="Хончи жажан" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Honchi+Jajang'">
+                <div class="food-info">
+                    <h3 class="food-title">12. Хончи жажан</h3>
+                    <p class="food-desc">Honey Garlick Chicken ба Жантай гоймон 2 хүн</p>
+                    <p class="price-tag">41,000₮</p>
+                </div>
+            </div>
+
+            <!-- 13 -->
+            <div class="food-card">
+                <img src="Gemini_Generated_Image_fgd6hufgd6hufgd6.png" class="food-img" alt="Бүр жажан" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Bur+Jajang'">
+                <div class="food-info">
+                    <h3 class="food-title">13. Бүр жажан</h3>
+                    <p class="food-desc">Бүрж шарсан тахиа ба Жантай гоймон</p>
+                    <p class="price-tag">39,000₮</p>
+                </div>
+            </div>
+
+            <!-- 14 -->
+            <div class="food-card">
+                <img src="Gemini_Generated_Image_vspodzvspodzvspo.png" class="food-img" alt="Танжажан" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Tanjajang'">
+                <div class="food-info">
+                    <h3 class="food-title">14. Танжажан</h3>
+                    <p class="food-desc">Тансүюг, жантай гоймон 2ш.</p>
+                    <p class="price-tag">57,000₮</p>
+                </div>
+            </div>
+
+            <!-- 15: Урамшуулал & QR -->
+            <div class="food-card border-2 border-red-500 bg-red-50 flex flex-col justify-center items-center p-2 relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 w-12 h-12 bg-red-100 rounded-full opacity-50"></div>
+                <div class="absolute -left-4 -bottom-4 w-16 h-16 bg-red-200 rounded-full opacity-30"></div>
+                
+                <div class="z-10 flex flex-col items-center w-full">
+                    <div class="bg-red-600 text-white w-full py-1 rounded shadow-sm text-center mb-1.5">
+                        <h3 class="font-black text-[14px] leading-none tracking-tight">9 + 1 БЭЛЭГ</h3>
+                    </div>
+                    <p class="text-[8px] text-red-700 font-bold mb-1.5 text-center leading-tight">9 удаа аваад 10 дахь нь <br><span class="text-gray-900 font-black">ҮНЭГҮЙ!</span></p>
+                    
+                    <div class="w-16 h-16 bg-white border border-gray-300 rounded p-1 shadow-sm">
+                        <img src="https://lh3.googleusercontent.com/d/1MyRk5a3TFbi92R8oT9XMRuPnZfnd-o1d" alt="QR Code" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/200x200/fff/a0aec0?text=QR'">
+                    </div>
+                    <p class="text-[7.5px] font-black text-gray-800 mt-1 uppercase tracking-widest">Scan & Order</p>
                 </div>
             </div>
         </main>
 
         <!-- Доод хэсэг -->
-        <footer class="mt-2 pt-1.5 border-t border-gray-100 flex items-center justify-between">
-            <div class="flex-1 flex items-center gap-3">
-                <div class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-center flex-shrink-0 shadow-sm">
-                    <p class="text-[14px] font-black leading-none">9 + 1</p>
-                    <p class="text-[6px] uppercase font-bold tracking-tighter">Бэлэг</p>
-                </div>
-                <div class="leading-tight">
-                    <h4 class="text-red-700 font-bold text-[9px] uppercase tracking-tight">Урамшуулал</h4>
-                    <p class="text-[8px] text-gray-500 italic">9 удаа аваад 10 дахь нь <span class="font-bold text-gray-800 text-[10px]">ҮНЭГҮЙ</span></p>
-                </div>
+        <footer class="mt-1 pt-1.5 border-t-2 border-gray-200 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-4 text-[9px] font-bold text-gray-600">
+                <span class="flex items-center"><i class="fas fa-map-marker-alt text-red-600 mr-1.5 text-[11px]"></i> 100 айлын урд буудал, BSB эсрэг талд</span>
+                <span class="flex items-center border-l border-gray-300 pl-4"><i class="fas fa-clock text-red-600 mr-1.5 text-[11px]"></i> Өдөр бүр: 10:00 - 20:00</span>
             </div>
-            <div class="flex items-center gap-3">
-                <div class="text-right">
-                    <p class="text-[8px] font-bold text-gray-400"><i class="fab fa-facebook mr-1 text-blue-600"></i> JanJa Myon Official</p>
-                    <p class="text-[7px] font-bold text-red-600 tracking-widest uppercase">Traditional Taste</p>
-                </div>
-                <div class="w-11 h-11 bg-white border border-gray-100 rounded p-0.5">
-                    <img src="https://lh3.googleusercontent.com/d/1MyRk5a3TFbi92R8oT9XMRuPnZfnd-o1d" alt="[Image of QR Code]" class="w-full h-full object-contain">
-                </div>
+            <div class="text-[9px] font-black text-red-700 tracking-widest uppercase">
+                Traditional Taste
             </div>
         </footer>
 
-        <div class="absolute bottom-0 left-0 w-full h-1 bg-red-600"></div>
+        <div class="absolute bottom-0 left-0 w-full h-1.5 bg-red-600"></div>
     </div>
 
     <!-- Татаж авах товчлуур -->
@@ -284,21 +369,30 @@
         document.getElementById('download-btn').addEventListener('click', function() {
             const element = document.getElementById('menu-content');
             
-            // PDF татаж авах тохиргоо
+            // Түр зуур товчийг идэвхгүй болгох
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Уншиж байна...</span>';
+            btn.disabled = true;
+
             const opt = {
                 margin: 0,
-                filename: 'JanJa_Myon_Menu.pdf',
+                filename: 'JanJa_Myon_Menu_Updated.pdf',
                 image: { type: 'jpeg', quality: 1 },
                 html2canvas: { 
-                    scale: 3, // Чанарыг нэмэгдүүлэх
-                    useCORS: true, // Гадаад линкээс зураг татахад ашиглах
-                    letterRendering: true
+                    scale: 3, 
+                    useCORS: true, 
+                    letterRendering: true,
+                    logging: false
                 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // Файлыг үүсгэж татаж авах
-            html2pdf().set(opt).from(element).save();
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Буцаагаад хэвэнд нь оруулах
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
         });
     </script>
 
