@@ -16,40 +16,39 @@
         
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #d1d5db; /* Гаднах дэвсгэр өнгө */
+            background-color: #d1d5db; 
             margin: 0;
             padding: 40px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px; /* Хуудас хоорондын зай дэлгэцэнд */
+            gap: 20px; 
         }
 
-        /* PDF Container - Татаж авах үед энэ хэсгийг барьж авна */
         #pdf-container {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            width: 210mm; /* Яг А4 өргөн */
+            width: 210mm; 
         }
 
-        /* А4 хэмжээ */
         .a4-page {
             width: 210mm !important;
             height: 297mm !important;
+            max-height: 297mm !important;
             min-width: 210mm;
             min-height: 297mm;
             background: white;
             position: relative;
             overflow: hidden;
-            padding: 8mm 10mm; /* Ирмэгийн зайг нэмэгдүүлсэн */
+            padding: 10mm 12mm; /* Дээд доод зайг багасгаж хоолонд илүү зай гаргав */
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            page-break-inside: avoid;
         }
 
-        /* PDF хэвлэх үеийн тохиргоо */
         @media print {
             @page {
                 size: A4 portrait;
@@ -67,44 +66,40 @@
             .a4-page {
                 box-shadow: none;
                 margin: 0;
-                page-break-after: always; /* Хуудас таслах */
+                page-break-after: always; 
             }
             .no-print {
                 display: none !important;
             }
         }
 
-        /* html2pdf-д зориулсан хуудас таслагч класс */
         .page-break {
             page-break-before: always;
         }
 
-        /* 2 багана, 4 мөр (Нийт 8 нүд 1 хуудсанд) */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(4, 1fr);
-            gap: 12px; 
+            gap: 10px; /* Зайг бага зэрэг багасгаж багтаамжийг сайжруулав */
             flex-grow: 1;
-            margin-top: 12px;
-            margin-bottom: 12px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
-        /* Хоолны карт */
         .food-card {
             border: 1px solid #e5e7eb;
-            border-radius: 10px;
+            border-radius: 8px; /* Ирмэгийг илүү орчин үеийн болгов */
             overflow: hidden;
             display: flex;
             flex-direction: column;
             background: #fff;
             height: 100%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
 
-        /* Зургийг томосгосон */
         .food-img {
-            height: 160px; /* Өмнө нь 110px байсан */
+            height: 125px; /* UI/UX ЗАСВАР: Зургийн өндрийг ухаалгаар тохируулж доод талын 7,8 дахь хоол харагдахгүй байсныг засав */
             width: 100%;
             object-fit: cover;
             background: #fdfdfd;
@@ -112,7 +107,7 @@
         }
 
         .food-info {
-            padding: 8px 12px; 
+            padding: 8px 10px; 
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -120,19 +115,19 @@
         }
 
         .food-title {
-            font-size: 1.1rem; /* Томосгосон */
+            font-size: 0.95rem; /* Цэвэрхэн уншигдах хэмжээ */
             font-weight: 800;
-            line-height: 1.2;
+            line-height: 1.1;
             color: #1a1a1a;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .food-desc {
-            font-size: 0.75rem; /* Томосгосон */
+            font-size: 0.7rem;
             color: #555;
-            margin: 0 0 6px 0;
+            margin: 0 0 4px 0;
             font-style: italic;
-            line-height: 1.3;
+            line-height: 1.2;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -140,20 +135,20 @@
         }
 
         .price-tag {
-            color: #dc2626; /* Tailwind red-600 */
+            color: #dc2626;
             font-weight: 900;
-            font-size: 1.3rem; /* Томосгосон */
+            font-size: 1.15rem; /* Багтах бөгөөд тод харагдах хэмжээ */
             line-height: 1;
             margin-top: auto;
         }
 
         .multi-price {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             color: #dc2626;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
             margin-top: auto;
         }
 
@@ -188,18 +183,17 @@
         
         <!-- ================= ХУУДАС 1 ================= -->
         <div class="a4-page">
-            <!-- Толгой хэсэг (Хуудас 1) -->
-            <header class="flex justify-between items-end border-b-4 border-red-600 pb-3 shrink-0">
+            <header class="flex justify-between items-center border-b-4 border-red-600 pb-3 pt-1 shrink-0">
                 <div>
                     <div class="flex items-center space-x-2">
-                        <span class="text-5xl font-black text-red-700 tracking-tighter">JanJa</span>
-                        <span class="text-5xl font-light text-gray-800 tracking-tight border-l-2 border-gray-300 pl-2">Myon</span>
+                        <span class="text-4xl font-black text-red-700 tracking-tighter pb-1">JanJa</span>
+                        <span class="text-4xl font-light text-gray-800 tracking-tight border-l-2 border-gray-300 pl-2 pb-1">Myon</span>
                     </div>
-                    <p class="text-[12px] text-red-600 font-black uppercase tracking-widest mt-1">K-Drama дээрх яг л тэр амтыг манайхаас...</p>
+                    <p class="text-[11px] text-red-600 font-black uppercase tracking-widest mt-1 block">K-Drama дээрх яг л тэр амтыг манайхаас...</p>
                 </div>
-                <div class="text-right">
-                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Хүргэлт & Захиалга</p>
-                    <p class="font-black text-gray-900 text-3xl leading-none"><i class="fas fa-phone-alt text-red-600 mr-1"></i> 9090-8772</p>
+                <div class="text-right flex flex-col justify-center">
+                    <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-1">Хүргэлт & Захиалга</p>
+                    <p class="font-black text-gray-900 text-2xl flex items-center justify-end"><i class="fas fa-phone-alt text-red-600 mr-2"></i> 9090-8772</p>
                 </div>
             </header>
 
@@ -309,7 +303,7 @@
             </main>
 
             <!-- Хуудас 1-ийн хөл хэсэг -->
-            <footer class="mt-2 bg-gray-50 rounded-xl border border-gray-200 p-3 flex items-center justify-between shrink-0 relative overflow-hidden shadow-sm">
+            <footer class="mt-1 bg-gray-50 rounded-xl border border-gray-200 p-2.5 flex items-center justify-between shrink-0 relative overflow-hidden shadow-sm">
                 <div class="absolute left-0 top-0 bottom-0 w-2 bg-red-600"></div>
                 <div class="flex items-center justify-between w-full pl-3 pr-2">
                     <!-- Address -->
@@ -359,19 +353,18 @@
         </div>
 
         <!-- ================= ХУУДАС 2 ================= -->
-        <div class="a4-page page-break">
-            <!-- Толгой хэсэг (Хуудас 2) - Брэндээ хадгалах үүднээс ижил -->
-            <header class="flex justify-between items-end border-b-4 border-red-600 pb-3 shrink-0">
+        <div class="a4-page page-break" id="page2">
+            <header class="flex justify-between items-center border-b-4 border-red-600 pb-3 pt-1 shrink-0">
                 <div>
                     <div class="flex items-center space-x-2">
-                        <span class="text-5xl font-black text-red-700 tracking-tighter">JanJa</span>
-                        <span class="text-5xl font-light text-gray-800 tracking-tight border-l-2 border-gray-300 pl-2">Myon</span>
+                        <span class="text-4xl font-black text-red-700 tracking-tighter pb-1">JanJa</span>
+                        <span class="text-4xl font-light text-gray-800 tracking-tight border-l-2 border-gray-300 pl-2 pb-1">Myon</span>
                     </div>
-                    <p class="text-[12px] text-red-600 font-black uppercase tracking-widest mt-1">Тусгай сет болон урамшуулал...</p>
+                    <p class="text-[11px] text-red-600 font-black uppercase tracking-widest mt-1 block">Тусгай сет болон урамшуулал...</p>
                 </div>
-                <div class="text-right">
-                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Хүргэлт & Захиалга</p>
-                    <p class="font-black text-gray-900 text-3xl leading-none"><i class="fas fa-phone-alt text-red-600 mr-1"></i> 9090-8772</p>
+                <div class="text-right flex flex-col justify-center">
+                    <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-1">Хүргэлт & Захиалга</p>
+                    <p class="font-black text-gray-900 text-2xl flex items-center justify-end"><i class="fas fa-phone-alt text-red-600 mr-2"></i> 9090-8772</p>
                 </div>
             </header>
 
@@ -452,33 +445,31 @@
                     </div>
                 </div>
 
-                <!-- 15: Урамшуулал & QR (Өргөнөөрөө бүтэн зай эзэлнэ - col-span-2) -->
-                <div class="food-card col-span-2 border-2 border-red-500 bg-gradient-to-r from-red-50 to-white flex flex-row items-center p-6 relative overflow-hidden">
+                <div class="food-card col-span-2 border-2 border-red-500 bg-gradient-to-r from-red-50 to-white flex flex-row items-center p-4 relative overflow-hidden">
                     <!-- Чимэглэл -->
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-red-100 rounded-full opacity-50"></div>
                     <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-red-200 rounded-full opacity-30"></div>
                     
-                    <div class="z-10 flex-1 pr-6 border-r-2 border-red-100">
-                        <div class="inline-block bg-red-600 text-white px-4 py-1.5 rounded-md shadow-sm mb-3">
-                            <h3 class="font-black text-2xl leading-none tracking-tight">9 + 1 БЭЛЭГ</h3>
+                    <div class="z-10 flex-1 pr-4 border-r-2 border-red-100">
+                        <div class="inline-block bg-red-600 text-white px-3 py-1 rounded-md shadow-sm mb-2">
+                            <h3 class="font-black text-xl leading-none tracking-tight">9 + 1 БЭЛЭГ</h3>
                         </div>
-                        <p class="text-sm text-red-800 font-bold leading-relaxed">
+                        <p class="text-[0.8rem] text-red-800 font-bold leading-snug">
                             Эрхэм үйлчлүүлэгч та манайхаас 9 удаа худалдан авалт хийгээд 10 дахь хоолоо <br>
-                            <span class="text-gray-900 font-black text-lg bg-yellow-300 px-2 mt-1 inline-block rounded">ҮНЭГҮЙ!</span> аваарай.
+                            <span class="text-gray-900 font-black text-base bg-yellow-300 px-1 mt-1 inline-block rounded">ҮНЭГҮЙ!</span> аваарай.
                         </p>
                     </div>
 
-                    <div class="z-10 pl-6 flex flex-col items-center justify-center">
-                        <div class="w-28 h-28 bg-white border-2 border-gray-200 rounded-xl p-2 shadow-md">
+                    <div class="z-10 pl-4 flex flex-col items-center justify-center">
+                        <div class="w-24 h-24 bg-white border-2 border-gray-200 rounded-xl p-1 shadow-md">
                             <img src="https://lh3.googleusercontent.com/d/1MyRk5a3TFbi92R8oT9XMRuPnZfnd-o1d" alt="QR Code" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/200x200/fff/a0aec0?text=QR'">
                         </div>
-                        <p class="text-xs font-black text-gray-800 mt-2 uppercase tracking-widest bg-gray-100 px-3 py-1 rounded-full">Scan & Order</p>
+                        <p class="text-[10px] font-black text-gray-800 mt-1 uppercase tracking-widest bg-gray-100 px-2 py-0.5 rounded-full">Scan & Order</p>
                     </div>
                 </div>
             </main>
 
-            <!-- Хуудас 2-ийн хөл хэсэг -->
-            <footer class="mt-2 bg-gray-50 rounded-xl border border-gray-200 p-3 flex items-center justify-between shrink-0 relative overflow-hidden shadow-sm">
+            <footer class="mt-1 bg-gray-50 rounded-xl border border-gray-200 p-2.5 flex items-center justify-between shrink-0 relative overflow-hidden shadow-sm">
                 <div class="absolute left-0 top-0 bottom-0 w-2 bg-red-600"></div>
                 <div class="flex items-center justify-between w-full pl-3 pr-2">
                     <!-- Address -->
@@ -539,20 +530,24 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin text-lg"></i><span>Түр хүлээнэ үү...</span>';
             btn.disabled = true;
 
+            // Хуудас хоорондын зайг түр устгах (голд тасрахгүй яг таарах болно)
+            element.style.gap = '0px';
+            document.body.style.backgroundColor = 'white'; // Дэвсгэр өнгө алдагдахаас сэргийлэх
+
             // HTML2PDF тохиргоо (Хэмжээ алдахгүй байх тал дээр анхаарсан)
             const opt = {
                 margin: 0, // Цаасан дээр яг тааруулах
                 filename: 'JanJa_Myon_Menu_2Pages.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
+                image: { type: 'jpeg', quality: 1 },
                 html2canvas: { 
                     scale: 2, // 2 гэвэл хангалттай тод бөгөөд хэмжээ алдахгүй
                     useCORS: true, 
                     letterRendering: true,
                     scrollY: 0, // Скролл хийсэн үед зураг тасрахгүй байх
-                    windowWidth: 794 // 210mm in pixels (96 DPI) - хэмжээ алдахыг зогсооно
+                    windowWidth: document.documentElement.offsetWidth
                 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: 'css' } // CSS .page-break классыг уншиж 2 хуудас болгоно
+                pagebreak: { mode: 'css' } // Зөвхөн CSS page-break ашиглах (давхардал үүсгэхгүй)
             };
 
             // PDF үүсгээд татаж авах
@@ -560,6 +555,8 @@
                 // Буцаагаад хэвэнд нь оруулах
                 btn.innerHTML = originalText;
                 btn.disabled = false;
+                element.style.gap = '20px'; // Дэлгэцийн зайг буцааж оруулах
+                document.body.style.backgroundColor = '';
             });
         });
     </script>
