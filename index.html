@@ -3,563 +3,923 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JanJa Myon - 2 Page A4 Menu</title>
+    <title>JanJa Myon - А4 Цэс хэвлэгч ба Засварлагч</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- PDF татаж авахад зориулсан сан -->
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+Mongolian&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <!-- html2pdf.js for High-Quality PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap');
-        
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #d1d5db; 
-            margin: 0;
-            padding: 40px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px; 
-        }
-
-        #pdf-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 210mm; 
-        }
-
+        /* А4 Хуудасны бодит хэмжээг дэлгэц дээр загварчлах */
         .a4-page {
-            width: 210mm !important;
-            height: 297mm !important;
-            max-height: 297mm !important;
+            width: 210mm;
+            height: 297mm;
             min-width: 210mm;
             min-height: 297mm;
-            background: white;
             position: relative;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            margin: 0 auto;
             overflow: hidden;
-            padding: 10mm 12mm; /* Дээд доод зайг багасгаж хоолонд илүү зай гаргав */
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            page-break-inside: avoid;
+            transition: all 0.3s ease;
         }
 
+        /* Загвар өөрчлөх уян хатан үйлдэл */
+        .compact-mode .menu-item {
+            padding: 4px !important;
+            gap: 8px !important;
+        }
+        .compact-mode .menu-image-container {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        .compact-mode .menu-item-desc {
+            display: none !important;
+        }
+
+        /* Хэвлэх үеийн тусгай CSS тохиргоо */
         @media print {
-            @page {
-                size: A4 portrait;
-                margin: 0;
-            }
             body {
-                background: white;
-                padding: 0;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            #pdf-container {
-                gap: 0;
-            }
-            .a4-page {
-                box-shadow: none;
-                margin: 0;
-                page-break-after: always; 
+                background: white !important;
+                color: black !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
             .no-print {
                 display: none !important;
             }
+            .a4-page {
+                box-shadow: none !important;
+                margin: 0 !important;
+                border: none !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
         }
 
-        .page-break {
-            page-break-before: always;
+        /* Интерактив засах талбарууд */
+        [contenteditable="true"] {
+            outline: none;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+        [contenteditable="true"]:hover {
+            background-color: rgba(239, 68, 68, 0.05);
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+        }
+        [contenteditable="true"]:focus {
+            background-color: rgba(239, 68, 68, 0.1);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
         }
 
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(4, 1fr);
-            gap: 10px; /* Зайг бага зэрэг багасгаж багтаамжийг сайжруулав */
-            flex-grow: 1;
-            margin-top: 10px;
-            margin-bottom: 10px;
+        /* Булангийн угалз загварууд */
+        .corner-border-tl {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 35px;
+            height: 35px;
+            border-top: 3px solid var(--theme-color, #dc2626);
+            border-left: 3px solid var(--theme-color, #dc2626);
         }
-
-        .food-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 8px; /* Ирмэгийг илүү орчин үеийн болгов */
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-            height: 100%;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        .corner-border-tr {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            border-top: 3px solid var(--theme-color, #dc2626);
+            border-right: 3px solid var(--theme-color, #dc2626);
         }
-
-        .food-img {
-            height: 125px; /* UI/UX ЗАСВАР: Зургийн өндрийг ухаалгаар тохируулж доод талын 7,8 дахь хоол харагдахгүй байсныг засав */
-            width: 100%;
-            object-fit: cover;
-            background: #fdfdfd;
-            border-bottom: 1px solid #f3f4f6;
+        .corner-border-bl {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            width: 35px;
+            height: 35px;
+            border-bottom: 3px solid var(--theme-color, #dc2626);
+            border-left: 3px solid var(--theme-color, #dc2626);
         }
-
-        .food-info {
-            padding: 8px 10px; 
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
-        }
-
-        .food-title {
-            font-size: 0.95rem; /* Цэвэрхэн уншигдах хэмжээ */
-            font-weight: 800;
-            line-height: 1.1;
-            color: #1a1a1a;
-            margin-bottom: 3px;
-        }
-
-        .food-desc {
-            font-size: 0.7rem;
-            color: #555;
-            margin: 0 0 4px 0;
-            font-style: italic;
-            line-height: 1.2;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .price-tag {
-            color: #dc2626;
-            font-weight: 900;
-            font-size: 1.15rem; /* Багтах бөгөөд тод харагдах хэмжээ */
-            line-height: 1;
-            margin-top: auto;
-        }
-
-        .multi-price {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #dc2626;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            margin-top: auto;
-        }
-
-        .multi-price span {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed #e5e7eb;
-            padding-bottom: 2px;
-        }
-
-        .featured-border {
-            border: 2px solid #dc2626;
-        }
-
-        header, footer {
-            flex-shrink: 0;
+        .corner-border-br {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            border-bottom: 3px solid var(--theme-color, #dc2626);
+            border-right: 3px solid var(--theme-color, #dc2626);
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-900 text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
 
-    <!-- Татаж авах товчлуур -->
-    <div class="no-print fixed top-6 right-6 z-50">
-        <button id="download-btn" class="bg-red-600 text-white px-6 py-3 rounded-full font-bold shadow-2xl hover:bg-red-700 transition flex items-center space-x-2 text-sm">
-            <i class="fas fa-download text-lg"></i>
-            <span>PDF Татах (2 Хуудас)</span>
+    <!-- Хэвлэхгүй удирдах самбар -->
+    <header class="no-print bg-slate-950 text-white shadow-2xl border-b border-slate-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-red-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-red-600/30">
+                    JJ
+                </div>
+                <div>
+                    <h1 class="text-base font-bold tracking-tight flex items-center gap-2">
+                        <span>JanJa Myon</span> 
+                        <span class="text-[10px] text-red-400 bg-red-950 border border-red-800 px-2 py-0.5 rounded-full">А4 Цэс Засварлагч v3.0</span>
+                    </h1>
+                    <p class="text-[11px] text-slate-400">Цэсийг шууд засаж, А4 PDF-ээр татах эсвэл хэвлэх</p>
+                </div>
+            </div>
+
+            <!-- Загвар, Хэмжээ удирдах тохиргоонууд -->
+            <div class="flex flex-wrap items-center gap-2">
+                <!-- Зургийн удирдлага -->
+                <button onclick="toggleImages()" id="btn-toggle-images" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Цэсний зургуудыг нууж зай хэмнэх">
+                    <i class="fa-regular fa-image text-emerald-400"></i>
+                    <span id="img-btn-text">Зураг нуух</span>
+                </button>
+
+                <!-- Бэх хэмнэгч -->
+                <button onclick="toggleInkSaver()" id="btn-toggle-ink" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Арын хээг арилгаж, хэвлэгчийн бэх хэмнэх">
+                    <i class="fa-solid fa-droplet-slash text-yellow-400"></i>
+                    <span>Бэх хэмнэх</span>
+                </button>
+
+                <!-- Хэмжээ агшаах (Compact Mode) -->
+                <button onclick="toggleCompactMode()" id="btn-toggle-compact" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Олон хоол нэг хуудсанд багтаах">
+                    <i class="fa-solid fa-compress text-blue-400"></i>
+                    <span>Шахсан горим</span>
+                </button>
+
+                <!-- Өнгөний Сэдэв сонгох -->
+                <div class="flex items-center space-x-1.5 bg-slate-800 p-1 rounded-lg border border-slate-700">
+                    <button onclick="changeTheme('red')" class="w-5 h-5 rounded-full bg-red-600 border border-white focus:ring-2 focus:ring-offset-2 focus:ring-red-500" title="Улаан уламжлалт"></button>
+                    <button onclick="changeTheme('dark')" class="w-5 h-5 rounded-full bg-stone-950 border border-stone-700 focus:ring-2 focus:ring-offset-2 focus:ring-stone-500" title="Тансаг хар"></button>
+                    <button onclick="changeTheme('gold')" class="w-5 h-5 rounded-full bg-amber-600 border border-amber-400 focus:ring-2 focus:ring-offset-2 focus:ring-amber-500" title="Амтат алтан шар"></button>
+                </div>
+
+                <!-- Шинэ хоол нэмэх -->
+                <button onclick="addNewMenuItem()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-2 rounded-lg transition flex items-center gap-1.5 font-semibold">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Хоол нэмэх</span>
+                </button>
+
+                <!-- PDF татах шинэ товчлуур -->
+                <button onclick="downloadAsPDF()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-bold transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
+                    <i class="fa-solid fa-file-pdf text-lg"></i>
+                    <span>PDF Татах</span>
+                </button>
+
+                <!-- Хэвлэх товч -->
+                <button onclick="triggerPrintWithGuide()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-bold transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-print text-base"></i>
+                    <span>А4 Хэвлэх</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col items-center justify-start bg-slate-900">
+        
+        <!-- Custom UI Alert/Notification Box (Replacing alert()) -->
+        <div id="custom-alert" class="no-print w-full max-w-[210mm] hidden bg-red-950/80 border border-red-500 text-red-200 p-4 rounded-xl mb-4 shadow-lg text-xs flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-base text-red-400"></i>
+                <span id="alert-message">Алдаа гарлаа.</span>
+            </div>
+            <button onclick="hideAlert()" class="bg-red-800 hover:bg-red-700 px-2 py-1 rounded text-[10px] font-bold">Хаах</button>
+        </div>
+
+        <!-- PDF Processing/Loading Overlay -->
+        <div id="pdf-loading-overlay" class="no-print fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 flex-col">
+            <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl max-w-sm w-full mx-4 text-center shadow-2xl">
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-amber-500 border-t-transparent mb-4"></div>
+                <h3 class="text-lg font-bold text-white mb-2">PDF файл бэлтгэж байна...</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">Цэсэн дэх зургуудыг өндөр чанартай нэгтгэн А4 PDF хэлбэрт хөрвүүлж байна. Хэдэн секунд хүлээнэ үү.</p>
+            </div>
+        </div>
+
+        <!-- Хэвлэх зааврын поп-ап мэдэгдэл -->
+        <div id="print-guide-modal" class="no-print fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity duration-300">
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl text-slate-100">
+                <div class="text-center mb-4">
+                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-2xl mb-3">
+                        <i class="fa-solid fa-print"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">Хэвлэхэд бэлэн боллоо!</h3>
+                    <p class="text-xs text-slate-400 mt-1">Хамгийн гоё хэвлэхийн тулд дараах тохиргоог шалгаарай:</p>
+                </div>
+                <div class="space-y-3 my-4 bg-slate-900/50 p-3 rounded-xl text-xs border border-slate-700/50">
+                    <div class="flex items-start gap-2.5">
+                        <span class="bg-red-500 text-white font-bold w-4 h-4 rounded-full flex items-center justify-center text-[10px] mt-0.5">1</span>
+                        <p>Цаасны хэмжээ: <b>A4</b> сонгох</p>
+                    </div>
+                    <div class="flex items-start gap-2.5">
+                        <span class="bg-red-500 text-white font-bold w-4 h-4 rounded-full flex items-center justify-center text-[10px] mt-0.5">2</span>
+                        <p>Захын зай (Margins): <b>None (Байхгүй)</b> эсвэл <b>0</b> болгох</p>
+                    </div>
+                    <div class="flex items-start gap-2.5">
+                        <span class="bg-red-500 text-white font-bold w-4 h-4 rounded-full flex items-center justify-center text-[10px] mt-0.5">3</span>
+                        <p>Арын зураг (Background graphics): <b>Тийм / Идэвхжүүлэх</b></p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="closePrintGuideAndPrint()" class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl transition text-xs">
+                        Ойлгосон, хэвлэх
+                    </button>
+                    <button onclick="document.getElementById('print-guide-modal').classList.add('hidden')" class="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-4 py-2.5 rounded-xl transition text-xs">
+                        Хаах
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- А4 Хуудасны эхлэл (Хуудас 1) -->
+        <div id="a4-menu-sheet" class="a4-page p-[12mm] flex flex-col justify-between border-2 border-dashed border-red-600 text-stone-900 transition-colors duration-300">
+            <!-- Гоёл чимэглэлийн булангуудын хүрээ -->
+            <div class="corner-border-tl"></div>
+            <div class="corner-border-tr"></div>
+            <div class="corner-border-bl"></div>
+            <div class="corner-border-br"></div>
+
+            <!-- Толгой хэсэг -->
+            <div class="text-center relative z-10 pt-2">
+                <div class="flex items-center justify-center mb-1">
+                    <span class="text-[10px] tracking-widest text-red-600 font-extrabold uppercase bg-red-100 px-3 py-0.5 rounded-full" contenteditable="true" id="tagline-1">
+                        K-Drama дээрх яг л тэр амт!
+                    </span>
+                </div>
+                
+                <h1 class="text-3xl font-extrabold tracking-tight flex items-center justify-center gap-1.5 my-1">
+                    <span contenteditable="true" id="brand-red" class="text-red-600 transition-colors">JanJa</span>
+                    <span contenteditable="true" id="brand-dark" class="text-stone-800 transition-colors">Myon</span>
+                </h1>
+                
+                <div class="flex items-center justify-center gap-3 text-[10px] text-stone-500 font-semibold" contenteditable="true" id="sub-headers">
+                    <span><i class="fa-solid fa-phone text-red-600 mr-1"></i> 9090-8772</span>
+                    <span>•</span>
+                    <span><i class="fa-solid fa-map-marker-alt text-red-600 mr-1"></i> 100 айл, BSB эсрэг тал</span>
+                    <span>•</span>
+                    <span><i class="fa-solid fa-clock text-red-600 mr-1"></i> 10:00 - 20:00</span>
+                </div>
+
+                <!-- Чимэглэл шугам -->
+                <div class="flex items-center justify-center gap-2 mt-2">
+                    <div class="w-14 h-[1px] bg-red-600/30"></div>
+                    <i class="fa-solid fa-utensils text-red-600 text-[10px]"></i>
+                    <div class="w-14 h-[1px] bg-red-600/30"></div>
+                </div>
+            </div>
+
+            <!-- Хоолны тор (Grid): Хэмжээнээс хамаарч А4-т яг багтахаар тооцоолсон -->
+            <div id="menu-grid" class="grid grid-cols-2 gap-x-5 gap-y-2.5 my-3 relative z-10 flex-1 overflow-hidden">
+                <!-- Хоол 1 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="1">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://lh3.googleusercontent.com/d/12mmrZ4hkqtU9A6kzVdfQ9-vqnvKRnm0n" alt="Жантай Гоймон" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Janjamyon'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">1.</span>
+                                <span contenteditable="true" class="menu-item-name">Жантай Гоймон</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">17,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Уламжлалт хар буурцгийн сүмстэй амтат гоймон.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 2 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="2">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://lh3.googleusercontent.com/d/1Tjse4It6GgDzYPNC97rZ0YMWQiG8r3cl" alt="Бугымбаб" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Bugymbap'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">2.</span>
+                                <span contenteditable="true" class="menu-item-name">Бугымбаб</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">19,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Жантай, өндөгтэй хуурсан будаа.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 3 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="3">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://lh3.googleusercontent.com/d/1IRh-dC533BVmRrb5BPgXhfaBfkXFZIbT" alt="Бугжажан" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Bugjajang'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">3.</span>
+                                <span contenteditable="true" class="menu-item-name">Бугжажан</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">21,800₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Тусгай жороор бэлтгэсэн амтат Жантай гоймонгийн сет.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 4 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="4">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://lh3.googleusercontent.com/d/1qvx0r3VOJf3q_TzJ7UU_VS19JvIYKACW" alt="Honey Garlic Chicken" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Chicken'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">4.</span>
+                                <span contenteditable="true" class="menu-item-name">Honey Garlic Chicken</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                        </div>
+                        <p contenteditable="true" class="text-[9px] text-stone-500 leading-none menu-item-desc">Зөгийн бал, сармистай чихэрлэг тахиа</p>
+                        <div class="flex justify-between items-center text-[9px] text-stone-600 mt-1">
+                            <span>M: 1 будаа, төмстэй</span>
+                            <span contenteditable="true" class="font-bold text-red-600 menu-item-price">24,000₮</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[9px] text-stone-600">
+                            <span>L: 2 будаа, төмстэй</span>
+                            <span contenteditable="true" class="font-bold text-red-600">40,000₮</span>
+                        </div>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 5 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="5">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://lh3.googleusercontent.com/d/1m0McF8JwscUYwKCfZrD8q4iyCULV78Ne" alt="Бүрж шарсан тахиа" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Fried+Chicken'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">5.</span>
+                                <span contenteditable="true" class="menu-item-name">Бүрж шарсан тахиа</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                        </div>
+                        <p contenteditable="true" class="text-[9px] text-stone-500 leading-none menu-item-desc">Амтат шаржигнуур Fried Chicken</p>
+                        <div class="flex justify-between items-center text-[9px] text-stone-600 mt-1">
+                            <span>M: 1 будаа, төмстэй</span>
+                            <span contenteditable="true" class="font-bold text-red-600 menu-item-price">22,000₮</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[9px] text-stone-600">
+                            <span>L: 2 будаа, төмстэй</span>
+                            <span contenteditable="true" class="font-bold text-red-600">38,000₮</span>
+                        </div>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 6 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="6">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://lh3.googleusercontent.com/d/1IwZ90chVrklFTmtD3QhdaG35uMC5eSKH" alt="Амтат Бууз" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Buuz'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">6.</span>
+                                <span contenteditable="true" class="menu-item-name">Амтат Бууз (10ш)</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">20,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Хоний мах, сонгинотой амтат уурын бууз.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 7 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="7">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://lh3.googleusercontent.com/d/1OJCO817jK95p_zcrcPod3RobL4jUHbY-" alt="Бугжамён" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Bugjamyon'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">7.</span>
+                                <span contenteditable="true" class="menu-item-name">Бугжамён</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">21,800₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Амтат хачир болон гоймонгийн хослол.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 8 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="8">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://lh3.googleusercontent.com/d/1z5nB22nM5DrRNpV7kxCqNtkchAtCUTvl" alt="Жампун" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Jampong'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">8.</span>
+                                <span contenteditable="true" class="menu-item-name">Жампун</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">20,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Халуун ногоотой, далайн бүтээгдэхүүнтэй шөл.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 9 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="9">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://lh3.googleusercontent.com/d/1f3RcMLC5XsvLHo7nwPu4I09wEjJJS02h" alt="Жамжамён" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Jamjamyon'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">9.</span>
+                                <span contenteditable="true" class="menu-item-name">Жамжамён</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">21,800₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Хоёр амтыг нэг дор! Жантай болон Жампун.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 10 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="10">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Tanjampong+Set" alt="Танжампун сэт" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Set'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">10.</span>
+                                <span contenteditable="true" class="menu-item-name">Танжампун сэт</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">59,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Тансуюуг, Жанпун, Жантай гоймон * 3-4 хүний сэт</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 11 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="11">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Tansuyuk" alt="Тансуюуг" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Tansuyuk'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">11.</span>
+                                <span contenteditable="true" class="menu-item-name">Тансуюуг</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                        </div>
+                        <p contenteditable="true" class="text-[9px] text-stone-500 leading-none menu-item-desc">Чихэрлэг соустай шарсан гахайн мах</p>
+                        <div class="flex justify-between items-center text-[9px] text-stone-600 mt-1">
+                            <span>M: Нэг хүний порц</span>
+                            <span contenteditable="true" class="font-bold text-red-600 menu-item-price">24,000₮</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[9px] text-stone-600">
+                            <span>L: Хоёр хүний порц</span>
+                            <span contenteditable="true" class="font-bold text-red-600">46,000₮</span>
+                        </div>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 12 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="12">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Honchi+Jajang" alt="Хончи жажан" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Combo'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">12.</span>
+                                <span contenteditable="true" class="menu-item-name">Хончи жажан</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">41,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Honey Garlick Chicken ба Жантай гоймон 2 хүн.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 13 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="13">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Bur+Jajang" alt="Бүр жажан" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Combo2'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">13.</span>
+                                <span contenteditable="true" class="menu-item-name">Бүр жажан</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">39,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Бүрж шарсан тахиа ба Жантай гоймонгийн сет.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+
+                <!-- Хоол 14 -->
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="14">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Tanjajang" alt="Танжажан" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Combo3'">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">14.</span>
+                                <span contenteditable="true" class="menu-item-name">Танжажан</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">57,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Тансүюг, жантай гоймон 2ш.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+            </div>
+
+            <!-- Доод хэсэг (Урамшуулал & QR холбоос) -->
+            <div class="border-t-2 border-dashed border-red-600/30 pt-3 pb-1 relative z-10">
+                <div class="grid grid-cols-12 gap-3 items-center">
+                    
+                    <!-- Урамшууллын хэсэг -->
+                    <div class="col-span-8 flex items-start space-x-2">
+                        <div class="bg-red-600 text-white p-1.5 rounded-xl text-center flex-shrink-0 shadow-md">
+                            <span class="block text-base font-black leading-none">9+1</span>
+                            <span class="text-[8px] uppercase tracking-wider font-bold">Урамшуулал</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-stone-900 text-[11px]" contenteditable="true" id="promo-title">9 + 1 УРАМШУУЛАЛ!</h4>
+                            <p class="text-[9px] text-stone-500 leading-tight mt-0.5" contenteditable="true" id="promo-desc">Та 9 удаа худалдан авалт хийгээд 10 дахь гоймонгоо ҮНЭГҮЙ аваарай. Манай байнгын үйлчлүүлэгч болоорой!</p>
+                        </div>
+                    </div>
+
+                    <!-- Хүргэлтийн мэдээлэл -->
+                    <div class="col-span-2 text-center border-l border-stone-200">
+                        <h4 class="font-bold text-red-600 text-[9px] uppercase tracking-wider">Хүргэлт</h4>
+                        <p class="text-[8px] text-stone-600 mt-0.5 leading-tight" contenteditable="true" id="delivery-info">100 айл: 3к<br>Бусад: 5-7к</p>
+                    </div>
+
+                    <!-- QR код холбоос -->
+                    <div class="col-span-2 flex flex-col items-center justify-center relative">
+                        <div class="w-12 h-12 bg-white border border-stone-200 rounded-lg p-1 shadow-sm relative group cursor-pointer" onclick="updateQRCodePrompt()">
+                            <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.facebook.com/profile.php?id=61577466385393" alt="QR Code" class="w-full h-full object-contain">
+                            <div class="no-print absolute inset-0 bg-black/85 text-white text-[7px] font-bold opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-center p-0.5">QR холбоос засах</div>
+                        </div>
+                        <span class="text-[8px] font-bold text-stone-700 mt-1 uppercase tracking-wider whitespace-nowrap">Scan & Order</span>
+                    </div>
+
+                </div>
+
+                <!-- Зохиогчийн эрх ба баталгаа -->
+                <div class="text-center text-[8px] text-stone-400 mt-2" contenteditable="true" id="footer-text">
+                    &copy; 2026 JanJa Myon. Утас: 9090-8772 | Бүх эрх хуулиар хамгаалагдсан.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Хэвлэх болон PDF татах уудам товчлуур - Гар утаснаас удирдах хурдан холбоосууд -->
+    <div class="no-print fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+        <!-- PDF татах хурдан товчлуур -->
+        <button onclick="downloadAsPDF()" class="bg-amber-500 text-slate-950 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-amber-600 transition border-4 border-white" title="PDF хэлбэрээр татах">
+            <i class="fa-solid fa-file-pdf"></i>
+        </button>
+        <!-- Хэвлэх хурдан товчлуур -->
+        <button onclick="triggerPrintWithGuide()" class="bg-red-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-red-700 transition border-4 border-white animate-pulse" title="А4 Хэвлэх">
+            <i class="fas fa-print"></i>
         </button>
     </div>
 
-    <!-- PDF Container -->
-    <div id="pdf-container">
-        
-        <!-- ================= ХУУДАС 1 ================= -->
-        <div class="a4-page">
-            <header class="flex justify-between items-center border-b-4 border-red-600 pb-3 pt-1 shrink-0">
-                <div>
-                    <div class="flex items-center space-x-2">
-                        <span class="text-4xl font-black text-red-700 tracking-tighter pb-1">JanJa</span>
-                        <span class="text-4xl font-light text-gray-800 tracking-tight border-l-2 border-gray-300 pl-2 pb-1">Myon</span>
-                    </div>
-                    <p class="text-[11px] text-red-600 font-black uppercase tracking-widest mt-1 block">K-Drama дээрх яг л тэр амтыг манайхаас...</p>
-                </div>
-                <div class="text-right flex flex-col justify-center">
-                    <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-1">Хүргэлт & Захиалга</p>
-                    <p class="font-black text-gray-900 text-2xl flex items-center justify-end"><i class="fas fa-phone-alt text-red-600 mr-2"></i> 9090-8772</p>
-                </div>
-            </header>
-
-            <!-- Хоолны цэс Хуудас 1 (1-ээс 8 дахь хоол) -->
-            <main class="menu-grid">
-                <!-- 1 -->
-                <div class="food-card featured-border shadow-md">
-                    <img src="https://lh3.googleusercontent.com/d/12mmrZ4hkqtU9A6kzVdfQ9-vqnvKRnm0n" class="food-img" alt="Жантай Гоймон" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Janjamyon'">
-                    <div class="food-info bg-red-50/30">
-                        <div>
-                            <h3 class="food-title text-red-700 text-xl">1. Жантай Гоймон</h3>
-                            <p class="food-desc">Уламжлалт хар буурцгийн сүмстэй амтат гоймон.</p>
-                        </div>
-                        <p class="price-tag">17,000₮</p>
-                    </div>
-                </div>
-
-                <!-- 2 -->
-                <div class="food-card">
-                    <img src="https://lh3.googleusercontent.com/d/1Tjse4It6GgDzYPNC97rZ0YMWQiG8r3cl" class="food-img" alt="Бугымбаб" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Bugymbap'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">2. Бугымбаб</h3>
-                            <p class="food-desc">Жантай, өндөгтэй хуурсан будаа.</p>
-                        </div>
-                        <p class="price-tag">19,000₮</p>
-                    </div>
-                </div>
-
-                <!-- 3 -->
-                <div class="food-card">
-                    <img src="https://lh3.googleusercontent.com/d/1IRh-dC533BVmRrb5BPgXhfaBfkXFZIbT" class="food-img" alt="Бугжажан" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Bugjajang'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">3. Бугжажан</h3>
-                            <p class="food-desc">Тусгай жороор бэлтгэсэн амтат Жантай гоймонгийн сет.</p>
-                        </div>
-                        <p class="price-tag">21,800₮</p>
-                    </div>
-                </div>
-
-                <!-- 4 -->
-                <div class="food-card">
-                    <img src="https://lh3.googleusercontent.com/d/1qvx0r3VOJf3q_TzJ7UU_VS19JvIYKACW" class="food-img" alt="Honey Garlic Chicken" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Honey+Garlic'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">4. Honey Garlic Chicken</h3>
-                            <p class="food-desc">Зөгийн бал, сармистай чихэрлэг тахиа</p>
-                        </div>
-                        <div class="multi-price">
-                            <span>M: 1 будаа, төмс <b class="ml-1 text-[0.85rem]">24k</b></span>
-                            <span>L: 2хүн, 2будаа, төмс <b class="ml-1 text-[0.85rem]">40k</b></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5 -->
-                <div class="food-card">
-                    <img src="https://lh3.googleusercontent.com/d/1m0McF8JwscUYwKCfZrD8q4iyCULV78Ne" class="food-img" alt="Бүрж шарсан тахиа" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Fried+Chicken'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">5. Бүрж шарсан тахиа</h3>
-                            <p class="food-desc">Fried Chicken (Шаржигнуур тахиа)</p>
-                        </div>
-                        <div class="multi-price">
-                            <span>M: 1 будаа, төмс <b class="ml-1 text-[0.85rem]">22k</b></span>
-                            <span>L: 2хүн, 2будаа, төмс <b class="ml-1 text-[0.85rem]">38k</b></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 6 -->
-                <div class="food-card">
-                    <img src="https://lh3.googleusercontent.com/d/1IwZ90chVrklFTmtD3QhdaG35uMC5eSKH" class="food-img" alt="Амтат Бууз" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Buuz'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">6. Амтат Бууз (10ш)</h3>
-                            <p class="food-desc">Хоний мах, сонгинотой амтат уурын бууз.</p>
-                        </div>
-                        <p class="price-tag">20,000₮</p>
-                    </div>
-                </div>
-
-                <!-- 7 -->
-                <div class="food-card">
-                    <img src="https://lh3.googleusercontent.com/d/1OJCO817jK95p_zcrcPod3RobL4jUHbY-" class="food-img" alt="Бугжамён" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Bugjamyon'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">7. Бугжамён</h3>
-                            <p class="food-desc">Амтат хачир болон гоймонгийн хослол.</p>
-                        </div>
-                        <p class="price-tag">21,800₮</p>
-                    </div>
-                </div>
-
-                <!-- 8 -->
-                <div class="food-card">
-                    <img src="https://lh3.googleusercontent.com/d/1z5nB22nM5DrRNpV7kxCqNtkchAtCUTvl" class="food-img" alt="Жампун" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Jampong'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">8. Жампун 🌶️</h3>
-                            <p class="food-desc">Халуун ногоотой, далайн гаралтай бүтээгдэхүүнтэй шөл.</p>
-                        </div>
-                        <p class="price-tag">20,000₮</p>
-                    </div>
-                </div>
-            </main>
-
-            <!-- Хуудас 1-ийн хөл хэсэг -->
-            <footer class="mt-1 bg-gray-50 rounded-xl border border-gray-200 p-2.5 flex items-center justify-between shrink-0 relative overflow-hidden shadow-sm">
-                <div class="absolute left-0 top-0 bottom-0 w-2 bg-red-600"></div>
-                <div class="flex items-center justify-between w-full pl-3 pr-2">
-                    <!-- Address -->
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
-                            <i class="fas fa-map-marker-alt text-red-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Хаяг байршил</p>
-                            <p class="text-[11px] font-black text-gray-800">100 айл, BSB эсрэг талд</p>
-                        </div>
-                    </div>
-                    
-                    <div class="w-px h-8 bg-gray-300"></div>
-                    
-                    <!-- Hours -->
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
-                            <i class="fas fa-clock text-red-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Цагийн хуваарь</p>
-                            <p class="text-[11px] font-black text-gray-800">Өдөр бүр: 10:00 - 20:00</p>
-                        </div>
-                    </div>
-
-                    <div class="w-px h-8 bg-gray-300"></div>
-
-                    <!-- Social -->
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
-                            <i class="fab fa-facebook-f text-blue-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Facebook</p>
-                            <p class="text-[11px] font-black text-gray-800">JanJa Myon Official</p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-            <div class="text-right mt-1 pr-1">
-                <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Хуудас 1</span>
-            </div>
-
-            <!-- Улаан зураас -->
-            <div class="absolute bottom-0 left-0 w-full h-2 bg-red-600"></div>
-        </div>
-
-        <!-- ================= ХУУДАС 2 ================= -->
-        <div class="a4-page page-break" id="page2">
-            <header class="flex justify-between items-center border-b-4 border-red-600 pb-3 pt-1 shrink-0">
-                <div>
-                    <div class="flex items-center space-x-2">
-                        <span class="text-4xl font-black text-red-700 tracking-tighter pb-1">JanJa</span>
-                        <span class="text-4xl font-light text-gray-800 tracking-tight border-l-2 border-gray-300 pl-2 pb-1">Myon</span>
-                    </div>
-                    <p class="text-[11px] text-red-600 font-black uppercase tracking-widest mt-1 block">Тусгай сет болон урамшуулал...</p>
-                </div>
-                <div class="text-right flex flex-col justify-center">
-                    <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider mb-1">Хүргэлт & Захиалга</p>
-                    <p class="font-black text-gray-900 text-2xl flex items-center justify-end"><i class="fas fa-phone-alt text-red-600 mr-2"></i> 9090-8772</p>
-                </div>
-            </header>
-
-            <!-- Хоолны цэс Хуудас 2 (9-өөс 14 дахь хоол + Урамшуулал) -->
-            <main class="menu-grid">
-                <!-- 9 -->
-                <div class="food-card">
-                    <img src="https://lh3.googleusercontent.com/d/1f3RcMLC5XsvLHo7nwPu4I09wEjJJS02h" class="food-img" alt="Жамжамён" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Jamjamyon'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">9. Жамжамён</h3>
-                            <p class="food-desc">Хоёр амтыг нэг дор! Жантай болон Жампун гоймонгийн хослол.</p>
-                        </div>
-                        <p class="price-tag">21,800₮</p>
-                    </div>
-                </div>
-
-                <!-- 10 -->
-                <div class="food-card">
-                    <img src="Gemini_Generated_Image_uftn38uftn38uftn.png" class="food-img" alt="Танжампун сэт" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Tanjampong+Set'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">10. Танжампун сэт</h3>
-                            <p class="food-desc">Тансуюуг, Жанпун, Жантай гоймон * 3-4 хүний сэт</p>
-                        </div>
-                        <p class="price-tag">59,000₮</p>
-                    </div>
-                </div>
-
-                <!-- 11 -->
-                <div class="food-card">
-                    <img src="Gemini_Generated_Image_ij4bu6ij4bu6ij4b.png" class="food-img" alt="Тансуюуг" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Tansuyuk'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">11. Тансуюуг</h3>
-                            <p class="food-desc">Чихэрлэг соустай шарсан гахайн мах</p>
-                        </div>
-                        <div class="multi-price">
-                            <span>M: 1 хүний порц <b class="ml-1 text-[0.85rem]">24k</b></span>
-                            <span>L: 2 хүний порц <b class="ml-1 text-[0.85rem]">46k</b></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 12 -->
-                <div class="food-card">
-                    <img src="620f8b74-4873-4a8e-8193-5c2febea385c.png" class="food-img" alt="Хончи жажан" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Honchi+Jajang'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">12. Хончи жажан</h3>
-                            <p class="food-desc">Honey Garlick Chicken ба Жантай гоймон 2 хүн</p>
-                        </div>
-                        <p class="price-tag">41,000₮</p>
-                    </div>
-                </div>
-
-                <!-- 13 -->
-                <div class="food-card">
-                    <img src="Gemini_Generated_Image_fgd6hufgd6hufgd6.png" class="food-img" alt="Бүр жажан" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Bur+Jajang'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">13. Бүр жажан</h3>
-                            <p class="food-desc">Бүрж шарсан тахиа ба Жантай гоймон</p>
-                        </div>
-                        <p class="price-tag">39,000₮</p>
-                    </div>
-                </div>
-
-                <!-- 14 -->
-                <div class="food-card">
-                    <img src="Gemini_Generated_Image_vspodzvspodzvspo.png" class="food-img" alt="Танжажан" onerror="this.src='https://placehold.co/400x300/f3f4f6/a0aec0?text=Tanjajang'">
-                    <div class="food-info">
-                        <div>
-                            <h3 class="food-title">14. Танжажан</h3>
-                            <p class="food-desc">Тансүюг, жантай гоймон 2ш.</p>
-                        </div>
-                        <p class="price-tag">57,000₮</p>
-                    </div>
-                </div>
-
-                <div class="food-card col-span-2 border-2 border-red-500 bg-gradient-to-r from-red-50 to-white flex flex-row items-center p-4 relative overflow-hidden">
-                    <!-- Чимэглэл -->
-                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-red-100 rounded-full opacity-50"></div>
-                    <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-red-200 rounded-full opacity-30"></div>
-                    
-                    <div class="z-10 flex-1 pr-4 border-r-2 border-red-100">
-                        <div class="inline-block bg-red-600 text-white px-3 py-1 rounded-md shadow-sm mb-2">
-                            <h3 class="font-black text-xl leading-none tracking-tight">9 + 1 БЭЛЭГ</h3>
-                        </div>
-                        <p class="text-[0.8rem] text-red-800 font-bold leading-snug">
-                            Эрхэм үйлчлүүлэгч та манайхаас 9 удаа худалдан авалт хийгээд 10 дахь хоолоо <br>
-                            <span class="text-gray-900 font-black text-base bg-yellow-300 px-1 mt-1 inline-block rounded">ҮНЭГҮЙ!</span> аваарай.
-                        </p>
-                    </div>
-
-                    <div class="z-10 pl-4 flex flex-col items-center justify-center">
-                        <div class="w-24 h-24 bg-white border-2 border-gray-200 rounded-xl p-1 shadow-md">
-                            <img src="https://lh3.googleusercontent.com/d/1MyRk5a3TFbi92R8oT9XMRuPnZfnd-o1d" alt="QR Code" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/200x200/fff/a0aec0?text=QR'">
-                        </div>
-                        <p class="text-[10px] font-black text-gray-800 mt-1 uppercase tracking-widest bg-gray-100 px-2 py-0.5 rounded-full">Scan & Order</p>
-                    </div>
-                </div>
-            </main>
-
-            <footer class="mt-1 bg-gray-50 rounded-xl border border-gray-200 p-2.5 flex items-center justify-between shrink-0 relative overflow-hidden shadow-sm">
-                <div class="absolute left-0 top-0 bottom-0 w-2 bg-red-600"></div>
-                <div class="flex items-center justify-between w-full pl-3 pr-2">
-                    <!-- Address -->
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
-                            <i class="fas fa-map-marker-alt text-red-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Хаяг байршил</p>
-                            <p class="text-[11px] font-black text-gray-800">100 айл, BSB эсрэг талд</p>
-                        </div>
-                    </div>
-                    
-                    <div class="w-px h-8 bg-gray-300"></div>
-                    
-                    <!-- Hours -->
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
-                            <i class="fas fa-clock text-red-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Цагийн хуваарь</p>
-                            <p class="text-[11px] font-black text-gray-800">Өдөр бүр: 10:00 - 20:00</p>
-                        </div>
-                    </div>
-
-                    <div class="w-px h-8 bg-gray-300"></div>
-
-                    <!-- Social -->
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
-                            <i class="fab fa-facebook-f text-blue-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Facebook</p>
-                            <p class="text-[11px] font-black text-gray-800">JanJa Myon Official</p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-            <div class="text-right mt-1 pr-1">
-                <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Хуудас 2</span>
-            </div>
-            
-            <!-- Улаан зураас -->
-            <div class="absolute bottom-0 left-0 w-full h-2 bg-red-600"></div>
-        </div>
-
-    </div> <!-- End of PDF Container -->
-
+    <!-- Үндсэн логик болон тохиргооны скрипт -->
     <script>
-        document.getElementById('download-btn').addEventListener('click', function() {
-            const element = document.getElementById('pdf-container');
+        // Идэвхтэй загвар болон тохиргооны хувьсагчид
+        let currentTheme = 'red';
+        let showImages = true;
+        let isInkSaver = false;
+        let isCompact = false;
+
+        // Найдвартай хэвлэх функц
+        function triggerPrintWithGuide() {
+            // Хамгийн түрүүнд хэвлэх зааврын поп-ап-ыг харуулна
+            const modal = document.getElementById('print-guide-modal');
+            modal.classList.remove('hidden');
+        }
+
+        function closePrintGuideAndPrint() {
+            // Поп-ап хаах
+            document.getElementById('print-guide-modal').classList.add('hidden');
             
-            // Түр зуур товчийг идэвхгүй болгож төлөв харуулах
-            const btn = this;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin text-lg"></i><span>Түр хүлээнэ үү...</span>';
-            btn.disabled = true;
+            // Найдвартай хэвлэх логик: фокусыг энэ цонхонд авчирч, богино хугацааны дараа дуудна
+            window.focus();
+            setTimeout(function() {
+                window.print();
+            }, 150);
+        }
 
-            // Хуудас хоорондын зайг түр устгах (голд тасрахгүй яг таарах болно)
-            element.style.gap = '0px';
-            document.body.style.backgroundColor = 'white'; // Дэвсгэр өнгө алдагдахаас сэргийлэх
+        // Custom Notification Alert
+        function showAlert(msg) {
+            const box = document.getElementById('custom-alert');
+            const txt = document.getElementById('alert-message');
+            txt.textContent = msg;
+            box.classList.remove('hidden');
+            box.scrollIntoView({ behavior: 'smooth' });
+        }
 
-            // HTML2PDF тохиргоо (Хэмжээ алдахгүй байх тал дээр анхаарсан)
+        function hideAlert() {
+            document.getElementById('custom-alert').classList.add('hidden');
+        }
+
+        // PDF хэлбэрээр шууд хөрвүүлэн татах ухаалаг үйлдэл (html2pdf integration)
+        async function downloadAsPDF() {
+            hideAlert();
+            const loader = document.getElementById('pdf-loading-overlay');
+            loader.classList.remove('hidden');
+            loader.classList.add('flex');
+
+            const element = document.getElementById('a4-menu-sheet');
+            
+            // PDF бэлтгэхийн өмнө хэвлэгдэхгүй (no-print) элементүүдийг илүү найдвартай нууна
+            const originalBorder = element.style.borderColor;
+            
+            // Хэрэв бэх хэмнэх идэвхтэй биш бол улаан/алтан өнгийг хэвээр үлдээнэ
             const opt = {
-                margin: 0, // Цаасан дээр яг тааруулах
-                filename: 'JanJa_Myon_Menu_2Pages.pdf',
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { 
-                    scale: 2, // 2 гэвэл хангалттай тод бөгөөд хэмжээ алдахгүй
-                    useCORS: true, 
-                    letterRendering: true,
-                    scrollY: 0, // Скролл хийсэн үед зураг тасрахгүй байх
-                    windowWidth: document.documentElement.offsetWidth
+                margin:       0,
+                filename:     'JanJa_Myon_A4_Menu.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2.5, // Өндөр нягтралтай (crisp text) хэвлэхэд зориулсан
+                    useCORS: true, // Гадны зургуудыг CORS хамгаалалттай ч унших боломж
+                    logging: false,
+                    letterRendering: true
                 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: 'css' } // Зөвхөн CSS page-break ашиглах (давхардал үүсгэхгүй)
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // PDF үүсгээд татаж авах
-            html2pdf().set(opt).from(element).save().then(() => {
-                // Буцаагаад хэвэнд нь оруулах
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                element.style.gap = '20px'; // Дэлгэцийн зайг буцааж оруулах
-                document.body.style.backgroundColor = '';
-            });
-        });
-    </script>
+            try {
+                // PDF үүсгэх процессыг эхлүүлнэ
+                await html2pdf().set(opt).from(element).save();
+            } catch (error) {
+                console.error("PDF generation error: ", error);
+                showAlert("PDF файл хөрвүүлэхэд алдаа гарлаа. Зарим зургийн холбоос зөвшөөрөлгүй байна. Та зургуудыг сольж туршина уу.");
+            } finally {
+                // Төлөвийг буцаах
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+            }
+        }
 
+        // Зураг харуулах/нуух
+        function toggleImages() {
+            showImages = !showImages;
+            const images = document.querySelectorAll('.menu-image-container');
+            const btnText = document.getElementById('img-btn-text');
+            const btn = document.getElementById('btn-toggle-images');
+
+            images.forEach(img => {
+                if (showImages) {
+                    img.style.display = 'block';
+                } else {
+                    img.style.display = 'none';
+                }
+            });
+
+            if (showImages) {
+                btnText.textContent = "Зураг нуух";
+                btn.innerHTML = '<i class="fa-regular fa-image text-emerald-400"></i> <span>Зураг нуух</span>';
+            } else {
+                btnText.textContent = "Зураг харуулах";
+                btn.innerHTML = '<i class="fa-solid fa-image-slash text-slate-400"></i> <span>Зураг харуулах</span>';
+            }
+        }
+
+        // Бэх хэмнэх горим (Арын улаан гоёл болон дэвсгэрийг хэмнэнэ)
+        function toggleInkSaver() {
+            isInkSaver = !isInkSaver;
+            const page = document.getElementById('a4-menu-sheet');
+            const btn = document.getElementById('btn-toggle-ink');
+            
+            if (isInkSaver) {
+                page.classList.add('bg-white');
+                page.style.backgroundColor = '#ffffff';
+                page.style.borderColor = '#000000';
+                
+                // Текстүүдийг хар болгох
+                document.querySelectorAll('.text-red-600').forEach(el => el.classList.add('text-black'));
+                document.querySelectorAll('.border-red-600').forEach(el => el.classList.add('border-black'));
+                document.querySelectorAll('.corner-border-tl, .corner-border-tr, .corner-border-bl, .corner-border-br').forEach(el => {
+                    el.style.borderColor = '#000000';
+                });
+                btn.innerHTML = '<i class="fa-solid fa-droplet text-emerald-400"></i> <span>Бэх хэвийн</span>';
+            } else {
+                // Буцаах
+                document.querySelectorAll('.text-red-600').forEach(el => el.classList.remove('text-black'));
+                document.querySelectorAll('.border-red-600').forEach(el => el.classList.remove('border-black'));
+                applyThemeStyles();
+                btn.innerHTML = '<i class="fa-solid fa-droplet-slash text-yellow-400"></i> <span>Бэх хэмнэх</span>';
+            }
+        }
+
+        // Шахсан буюу Compact Mode (Олон хоол нэг хуудас А4-д багтаахад хэрэглэнэ)
+        function toggleCompactMode() {
+            isCompact = !isCompact;
+            const page = document.getElementById('a4-menu-sheet');
+            const btn = document.getElementById('btn-toggle-compact');
+            
+            if (isCompact) {
+                page.classList.add('compact-mode');
+                btn.classList.add('bg-blue-900', 'text-white');
+                btn.innerHTML = '<i class="fa-solid fa-expand text-blue-400"></i> <span>Хэвийн горим</span>';
+            } else {
+                page.classList.remove('compact-mode');
+                btn.classList.remove('bg-blue-900', 'text-white');
+                btn.innerHTML = '<i class="fa-solid fa-compress text-blue-400"></i> <span>Шахсан горим</span>';
+            }
+        }
+
+        // Загвар өөрчлөх
+        function changeTheme(theme) {
+            currentTheme = theme;
+            applyThemeStyles();
+        }
+
+        function applyThemeStyles() {
+            if (isInkSaver) return; // Хэрэв бэх хэмнэх горимтой бол өнгө солихгүй
+
+            const page = document.getElementById('a4-menu-sheet');
+            const corners = document.querySelectorAll('.corner-border-tl, .corner-border-tr, .corner-border-bl, .corner-border-br');
+            const brandRed = document.getElementById('brand-red');
+            const brandDark = document.getElementById('brand-dark');
+            const prices = document.querySelectorAll('.menu-item-price');
+
+            if (currentTheme === 'red') {
+                page.style.borderColor = '#dc2626';
+                document.documentElement.style.setProperty('--theme-color', '#dc2626');
+                corners.forEach(el => el.style.borderColor = '#dc2626');
+                brandRed.style.color = '#dc2626';
+                brandDark.style.color = '#1c1917';
+                prices.forEach(p => p.style.color = '#dc2626');
+            } else if (currentTheme === 'dark') {
+                page.style.borderColor = '#1c1917';
+                document.documentElement.style.setProperty('--theme-color', '#1c1917');
+                corners.forEach(el => el.style.borderColor = '#1c1917');
+                brandRed.style.color = '#78716c';
+                brandDark.style.color = '#1c1917';
+                prices.forEach(p => p.style.color = '#1c1917');
+            } else if (currentTheme === 'gold') {
+                page.style.borderColor = '#d97706';
+                document.documentElement.style.setProperty('--theme-color', '#d97706');
+                corners.forEach(el => el.style.borderColor = '#d97706');
+                brandRed.style.color = '#d97706';
+                brandDark.style.color = '#78350f';
+                prices.forEach(p => p.style.color = '#d97706');
+            }
+        }
+
+        // Шинэ хоол нэмэх үйлдэл
+        function addNewMenuItem() {
+            const grid = document.getElementById('menu-grid');
+            const newId = Date.now();
+            const itemCount = grid.children.length + 1;
+
+            const itemHTML = `
+                <div class="menu-item flex items-start gap-2.5 bg-white p-1.5 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="${newId}">
+                    <div class="menu-image-container w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                        <img src="https://placehold.co/100x100/f5f5f5/ef4444?text=New+Dish" alt="Шинэ хоол" class="w-full h-full object-cover">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">${itemCount}.</span>
+                                <span contenteditable="true" class="menu-item-name">Шинэ хоолны нэр</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-300"></div>
+                            <span contenteditable="true" class="font-bold text-red-600 text-xs whitespace-nowrap menu-item-price">15,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-500 leading-snug mt-0.5 menu-item-desc">Хоолны товч амтлаг тайлбар болон орц.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+            `;
+
+            grid.insertAdjacentHTML('beforeend', itemHTML);
+            
+            // Хэрэв зураг нуусан горим идэвхтэй байвал шинэ зургийг нууна
+            if (!showImages) {
+                const lastItem = grid.lastElementChild;
+                lastItem.querySelector('.menu-image-container').style.display = 'none';
+            }
+            
+            applyThemeStyles();
+        }
+
+        // Хоол устгах
+        function deleteMenuItem(button) {
+            const menuItem = button.closest('.menu-item');
+            menuItem.remove();
+            recalculateItemNumbers();
+        }
+
+        // Дугаарлалтыг автоматаар шинэчлэх
+        function recalculateItemNumbers() {
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach((item, index) => {
+                const numSpan = item.querySelector('.item-num');
+                if (numSpan) {
+                    numSpan.textContent = `${index + 1}.`;
+                }
+            });
+        }
+
+        // Зургийн холбоос өөрчлөх
+        function changeImageUrl(button) {
+            const img = button.previousElementSibling;
+            const currentSrc = img.src;
+            const newUrl = prompt('Шинэ зурагны URL холбоосыг оруулна уу:', currentSrc);
+            
+            if (newUrl !== null && newUrl.trim() !== '') {
+                img.src = newUrl;
+            }
+        }
+
+        // QR код засах
+        function updateQRCodePrompt() {
+            const currentQRUrl = "https://www.facebook.com/profile.php?id=61577466385393";
+            const newUrl = prompt("QR кодоор уншуулахад очих холбоосыг оруулна уу (Вэбсайт эсвэл Фэйсбүүк хуудас):", currentQRUrl);
+            
+            if (newUrl !== null && newUrl.trim() !== "") {
+                const qrImg = document.getElementById('qr-code-img');
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(newUrl)}`;
+            }
+        }
+
+        // Эхлүүлэх үеийн бэлтгэл
+        window.onload = function() {
+            document.documentElement.style.setProperty('--theme-color', '#dc2626');
+            applyThemeStyles();
+        };
+    </script>
 </body>
 </html>
