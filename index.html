@@ -9,7 +9,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+Mongolian&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
     <!-- html2pdf.js for High-Quality PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
@@ -34,12 +34,12 @@
             min-width: 210mm;
             min-height: 297mm;
             position: relative;
-            background: #faf6f0; /* Тансаг warm ivory дэвсгэр */
-            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+            background: #fbfaf7; /* Тансаг warm ivory дэвсгэр */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             margin: 0 auto;
             overflow: hidden;
             box-sizing: border-box;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
 
         /* Загвар өөрчлөх уян хатан үйлдэл */
@@ -48,14 +48,14 @@
             gap: 8px !important;
         }
         .compact-mode .menu-image-container {
-            width: 44px !important;
-            height: 44px !important;
+            width: 48px !important;
+            height: 48px !important;
         }
         .compact-mode .menu-item-desc {
             display: none !important;
         }
 
-        /* 2 Багана бүхий Босоо Карт загварын тохиргоо (Хэвийн горим) */
+        /* 2 Хуудастай үеийн тусгай хэмжээсүүд (Төгс жигд, ижил хэмжээтэй ухаалаг картын систем) */
         .two-page-mode .menu-grid-container {
             grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
             gap: 16px !important;
@@ -64,13 +64,13 @@
             flex-direction: column !important;
             align-items: stretch !important;
             text-align: center;
-            padding: 14px !important;
-            gap: 10px !important;
-            background-color: #ffffff;
+            padding: 16px !important;
+            gap: 12px !important;
+            background-color: #fcfbfa;
             border: 1.5px solid #eae6e1;
             border-radius: 18px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
-            height: 100% !important;
+            height: 100% !important; /* Бүх картыг ижил өндөртэй болгоно */
             display: flex;
             justify-content: space-between;
         }
@@ -79,7 +79,7 @@
             width: 100% !important;
             max-width: 100% !important;
             height: auto !important;
-            aspect-ratio: 4 / 3 !important; /* Төгс 4:3 зураг */
+            aspect-ratio: 4 / 3 !important; /* Төгс 4:3 харьцаатай цэвэрхэн зураг */
             border-radius: 12px;
             overflow: hidden;
             flex-shrink: 0;
@@ -105,7 +105,7 @@
             margin-bottom: 6px;
         }
         .two-page-mode .menu-item .flex.items-baseline .h-\[1px\] {
-            display: none !important;
+            display: none !important; /* Холбогч цэгийг нуух */
         }
         .two-page-mode .menu-item-name {
             font-size: 13px !important;
@@ -114,7 +114,7 @@
             line-height: 1.2;
         }
         .two-page-mode .menu-item-price {
-            font-size: 13px !important;
+            font-size: 14px !important;
             font-weight: 900 !important;
             color: var(--theme-color, #dc2626) !important;
             background-color: rgba(220, 38, 38, 0.05);
@@ -132,94 +132,7 @@
             margin-top: 6px;
         }
 
-        /* 👑 VIP 2х2 Тансаг Горимын Тохиргоо (Хуудсанд яг 4 хоол, үлэмж том зурагтай) */
-        .vip-grid-mode .menu-grid-container {
-            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-            grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
-            gap: 24px !important;
-            padding-top: 10px !important;
-            padding-bottom: 10px !important;
-        }
-        .vip-grid-mode .menu-item {
-            flex-direction: column !important;
-            align-items: stretch !important;
-            text-align: center;
-            padding: 20px !important;
-            gap: 12px !important;
-            background-color: #ffffff;
-            border: 2px solid #f2ebdf;
-            border-radius: 24px;
-            box-shadow: 0 12px 30px rgba(139, 92, 26, 0.04);
-            height: 100% !important;
-            display: flex;
-            justify-content: space-between;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .vip-grid-mode .menu-item:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 36px rgba(220, 38, 38, 0.08);
-            border-color: var(--theme-color, #dc2626);
-        }
-        .vip-grid-mode .menu-image-container {
-            margin: 0 auto !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            height: auto !important;
-            aspect-ratio: 4 / 3 !important; /* Төгс 4:3 харьцаа */
-            border-radius: 16px;
-            overflow: hidden;
-            flex-shrink: 0;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-        }
-        .vip-grid-mode .menu-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover !important;
-        }
-        .vip-grid-mode .menu-item > div:not(.menu-image-container) {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex-grow: 1;
-        }
-        .vip-grid-mode .menu-item .flex.items-baseline {
-            justify-content: center !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            gap: 6px;
-            margin-bottom: 4px;
-        }
-        .vip-grid-mode .menu-item .flex.items-baseline .h-\[1px\] {
-            display: none !important;
-        }
-        .vip-grid-mode .menu-item-name {
-            font-size: 16px !important;
-            font-weight: 900 !important;
-            color: #1c1917 !important;
-            line-height: 1.2;
-            letter-spacing: -0.01em;
-        }
-        .vip-grid-mode .menu-item-price {
-            font-size: 15px !important;
-            font-weight: 900 !important;
-            color: var(--theme-color, #dc2626) !important;
-            background-color: rgba(220, 38, 38, 0.06);
-            padding: 4px 14px;
-            border-radius: 9999px;
-            display: inline-block;
-            border: 1px solid rgba(220, 38, 38, 0.1);
-        }
-        .vip-grid-mode .menu-item-desc {
-            font-size: 11.5px !important;
-            font-weight: 600;
-            color: #44403c !important;
-            line-height: 1.5;
-            text-align: center;
-            margin-top: 6px;
-        }
-
-        /* Хэвлэх үеийн CSS тохиргоо */
+        /* Хэвлэх үеийн тусгай CSS тохиргоо */
         @media print {
             body {
                 background: white !important;
@@ -247,7 +160,7 @@
             }
         }
 
-        /* Интерактив засах горим */
+        /* Интерактив засах талбарууд */
         [contenteditable="true"] {
             outline: none;
             border-radius: 4px;
@@ -299,41 +212,6 @@
             border-bottom: 3px solid var(--theme-color, #dc2626);
             border-right: 3px solid var(--theme-color, #dc2626);
         }
-
-        /* 💡 Хялбар Tooltip систем */
-        .tooltip-container {
-            position: relative;
-        }
-        .tooltip-text {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: -155%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #020617; /* Slate-950 */
-            border: 1.5px solid #334155;
-            color: #f8fafc;
-            text-align: center;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            line-height: 1.3;
-            width: max-content;
-            max-width: 220px;
-            z-index: 9999;
-            pointer-events: none;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
-            transition: opacity 0.2s, visibility 0.2s;
-        }
-        .tooltip-container:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-        .tooltip-top .tooltip-text {
-            bottom: 125% !important;
-            top: auto !important;
-        }
     </style>
 </head>
 <body class="bg-slate-900 text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
@@ -342,127 +220,83 @@
     <header class="no-print bg-slate-950 text-white shadow-2xl border-b border-slate-800 sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center space-x-3">
-                <div class="bg-red-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl shadow-lg shadow-red-600/30 animate-pulse">
+                <div class="bg-red-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl shadow-lg shadow-red-600/30">
                     JJ
                 </div>
                 <div>
                     <h1 class="text-base font-bold tracking-tight flex items-center gap-2">
                         <span>JanJa Myon</span> 
-                        <span class="text-[10px] text-amber-400 bg-amber-950/50 border border-amber-800 px-2 py-0.5 rounded-full font-bold animate-bounce">VIP 4-Card System</span>
+                        <span class="text-[10px] text-red-400 bg-red-950 border border-red-800 px-2 py-0.5 rounded-full font-bold">Premium Builder</span>
                     </h1>
-                    <p class="text-[11px] text-slate-400">Хуудас бүрт яг 4 том карт багтана</p>
+                    <p class="text-[11px] text-slate-400">Цэсийг засаж, А4 PDF-ээр татах эсвэл хэвлэх</p>
                 </div>
             </div>
 
             <!-- Загвар, Хэмжээ удирдах тохиргоонууд -->
             <div class="flex flex-wrap items-center gap-2">
-                <!-- VIP 2х2 Загвар шилжүүлэгч -->
-                <div class="tooltip-container">
-                    <button onclick="toggleVipMode()" id="btn-toggle-vip" class="bg-amber-600 hover:bg-amber-500 text-white text-xs px-3 py-2 rounded-lg border border-amber-500 transition flex items-center gap-1.5 font-bold" title="2х2 Тансаг горим болон энгийн горим сэлгэх">
-                        <i id="vip-btn-icon" class="fa-solid fa-gem text-yellow-300"></i>
-                        <span id="vip-btn-text">VIP 2х2 Горим (Идэвхтэй)</span>
-                    </button>
-                    <span class="tooltip-text">Тэгш тоотой хуудсуудыг А4-ийг 4 хуваасан маш том зурагтай VIP карт хэлбэртэй болгоно.</span>
-                </div>
-
                 <!-- Хуудасны тоо сонгох -->
-                <div class="tooltip-container">
-                    <button onclick="togglePageCount()" id="btn-toggle-pages" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5 font-bold" title="Босоо карт болон Хэвтээ жагсаалт горим сэлгэх">
-                        <i id="page-btn-icon" class="fa-solid fa-shapes text-amber-400"></i>
-                        <span id="page-btn-text">Карт загвар (Босоо)</span>
-                    </button>
-                    <span class="tooltip-text">Энгийн хуудсуудыг хэвтээ жагсаалт эсвэл 2 баганатай босоо карт загвартай болгоно.</span>
-                </div>
+                <button onclick="togglePageCount()" id="btn-toggle-pages" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5 font-bold" title="1 эсвэл 2 хуудастай цэс рүү шилжих">
+                    <i id="page-btn-icon" class="fa-solid fa-file-invoice text-amber-400"></i>
+                    <span id="page-btn-text">2 Хуудастай болгох</span>
+                </button>
 
                 <!-- Зургийн хэмжээ тохируулагч Слайдер -->
-                <div class="tooltip-container flex items-center gap-2 bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 text-xs font-semibold">
-                    <span class="text-slate-400 font-bold">Зургийн хэмжээ:</span>
-                    <input type="range" id="image-size-slider" min="50" max="120" value="100" oninput="changeImageSize(this.value)" class="w-20 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
-                    <span id="image-size-val" class="text-[10px] text-amber-400 font-bold min-w-[32px]">100px</span>
-                    <span class="tooltip-text">Жижиг картны зургийн өндөр, өргөнийг слайдераар гараар томруулж жижигрүүлнэ.</span>
+                <div class="flex items-center gap-2 bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 text-xs font-semibold">
+                    <span class="text-slate-400">Зургийн хэмжээ:</span>
+                    <input type="range" id="image-size-slider" min="50" max="120" value="68" oninput="changeImageSize(this.value)" class="w-20 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                    <span id="image-size-val" class="text-[10px] text-amber-400 font-bold min-w-[32px]">68px</span>
                 </div>
 
                 <!-- Зургийн удирдлага -->
-                <div class="tooltip-container">
-                    <button onclick="toggleImages()" id="btn-toggle-images" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Цэсний зургуудыг нууж зай хэмнэх">
-                        <i id="img-btn-icon" class="fa-regular fa-image text-emerald-400"></i>
-                        <span id="img-btn-text">Зураг нуух</span>
-                    </button>
-                    <span class="tooltip-text">Бүх зургийг нууж зөвхөн текстийг харуулна. Ингэснээр цаасны хэмжээс болон хэвлэгчийн бэх хэмнэнэ.</span>
-                </div>
+                <button onclick="toggleImages()" id="btn-toggle-images" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Цэсний зургуудыг нууж зай хэмнэх">
+                    <i id="img-btn-icon" class="fa-regular fa-image text-emerald-400"></i>
+                    <span id="img-btn-text">Зураг нуух</span>
+                </button>
 
                 <!-- Бэх хэмнэгч -->
-                <div class="tooltip-container">
-                    <button onclick="toggleInkSaver()" id="btn-toggle-ink" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Арын хээг арилгаж, хэвлэгчийн бэх хэмнэх">
-                        <i id="ink-btn-icon" class="fa-solid fa-droplet-slash text-yellow-400"></i>
-                        <span id="ink-btn-text">Бэх хэмнэх</span>
-                    </button>
-                    <span class="tooltip-text">Цэсний сүүн ivory арын дэвсгэрийг цагаан өнгөтэй болгож, хар-цагаан хэвлэгчээр хэвлэхэд бэх хэмнэнэ.</span>
-                </div>
+                <button onclick="toggleInkSaver()" id="btn-toggle-ink" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Арын хээг арилгаж, хэвлэгчийн бэх хэмнэх">
+                    <i id="ink-btn-icon" class="fa-solid fa-droplet-slash text-yellow-400"></i>
+                    <span id="ink-btn-text">Бэх хэмнэх</span>
+                </button>
 
                 <!-- Хэмжээ агшаах (Compact Mode) -->
-                <div class="tooltip-container">
-                    <button onclick="toggleCompactMode()" id="btn-toggle-compact" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Олон хоол нэг хуудсанд багтаах">
-                        <i id="compact-btn-icon" class="fa-solid fa-compress text-blue-400"></i>
-                        <span id="compact-btn-text">Шахсан горим</span>
-                    </button>
-                    <span class="tooltip-text">Картуудын дотоод зай болон тайлбар текстийг хурааж, нэг А4 хуудаст илүү олон хоол багтаана.</span>
-                </div>
+                <button onclick="toggleCompactMode()" id="btn-toggle-compact" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Олон хоол нэг хуудсанд багтаах">
+                    <i id="compact-btn-icon" class="fa-solid fa-compress text-blue-400"></i>
+                    <span id="compact-btn-text">Шахсан горим</span>
+                </button>
 
                 <!-- Өнгөний Сэдэв сонгох -->
-                <div class="tooltip-container flex items-center space-x-1.5 bg-slate-800 p-1 rounded-lg border border-slate-700">
+                <div class="flex items-center space-x-1.5 bg-slate-800 p-1 rounded-lg border border-slate-700">
                     <button onclick="changeTheme('red')" class="w-5 h-5 rounded-full bg-red-600 border border-white focus:ring-2 focus:ring-offset-2 focus:ring-red-500" title="Улаан уламжлалт"></button>
                     <button onclick="changeTheme('dark')" class="w-5 h-5 rounded-full bg-stone-950 border border-stone-700 focus:ring-2 focus:ring-offset-2 focus:ring-stone-500" title="Тансаг хар"></button>
                     <button onclick="changeTheme('gold')" class="w-5 h-5 rounded-full bg-amber-600 border border-amber-400 focus:ring-2 focus:ring-offset-2 focus:ring-amber-500" title="Амтат алтан шар"></button>
-                    <span class="tooltip-text">Цэсний угалз, хүрээ болон үнийн өнгийг хүссэн загвараараа солино.</span>
                 </div>
 
                 <!-- Шинэ хоол нэмэх -->
-                <div class="tooltip-container">
-                    <button onclick="addNewMenuItem()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-2 rounded-lg transition flex items-center gap-1.5 font-bold">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Хоол нэмэх</span>
-                    </button>
-                    <span class="tooltip-text">Цэсний хамгийн сүүлд шинэ хоол нэмэх бөгөөд хуудасны хэмжээнээс хэтэрвэл ухаалгаар дараагийн хуудсанд шилжүүлнэ.</span>
-                </div>
+                <button onclick="addNewMenuItem()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-2 rounded-lg transition flex items-center gap-1.5 font-bold">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Хоол нэмэх</span>
+                </button>
 
-                <!-- PDF татах товчлуур -->
-                <div class="tooltip-container">
-                    <button onclick="downloadAsPDF()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-extrabold transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
-                        <i class="fa-solid fa-file-pdf text-lg"></i>
-                        <span>PDF Татах</span>
-                    </button>
-                    <span class="tooltip-text">Таны оруулсан засалттай А4 цэсийг өндөр чанартай (High-DPI) PDF файл болгон хадгалж авна.</span>
-                </div>
+                <!-- PDF татах шинэ товчлуур -->
+                <button onclick="downloadAsPDF()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-extrabold transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
+                    <i class="fa-solid fa-file-pdf text-lg"></i>
+                    <span>PDF Татах</span>
+                </button>
 
                 <!-- Хэвлэх товч -->
-                <div class="tooltip-container">
-                    <button onclick="triggerPrintWithGuide()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-extrabold transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
-                        <i class="fa-solid fa-print text-base"></i>
-                        <span>А4 Хэвлэх</span>
-                    </button>
-                    <span class="tooltip-text">Шууд хэвлэгч төхөөрөмж рүү илгээх заавар бүхий цонхыг нээнэ.</span>
-                </div>
+                <button onclick="triggerPrintWithGuide()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-extrabold transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-print text-base"></i>
+                    <span>А4 Хэвлэх</span>
+                </button>
             </div>
         </div>
     </header>
 
     <main class="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col items-center justify-start bg-slate-900 gap-6">
         
-        <!-- Хуудасны тооны мэдээлэл өгөх самбар -->
-        <div class="no-print w-full max-w-[210mm] bg-slate-800/80 border border-slate-700 p-3.5 rounded-xl text-xs flex justify-between items-center shadow-lg">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-circle-info text-amber-400 text-sm"></i>
-                <span>Цэсний хэмжээ: <b id="page-indicator" class="text-amber-400">1 А4 хуудас</b>. Хэрэв хоол нэмэгдвэл дараагийн А4 хуудас автоматаар үүснэ.</span>
-            </div>
-            <div class="tooltip-container tooltip-top">
-                <button onclick="openResetModal()" class="bg-red-950 text-red-400 border border-red-900/50 hover:bg-red-900 hover:text-white px-2.5 py-1 rounded text-[10px] font-bold transition">Эхнийх шиг болгох</button>
-                <span class="tooltip-text">Оруулсан бүх өөрчлөлтийг арилгаж анхны Солонгос хоолны цэсний хэвэнд буцаан оруулна.</span>
-            </div>
-        </div>
-
-        <!-- Алдааны мэдэгдэл -->
-        <div id="custom-alert" class="no-print w-full max-w-[210mm] hidden bg-red-950/80 border border-red-500 text-red-200 p-4 rounded-xl shadow-lg text-xs flex justify-between items-center">
+        <!-- Custom UI Alert/Notification Box -->
+        <div id="custom-alert" class="no-print w-full max-w-[210mm] hidden bg-red-950/80 border border-red-500 text-red-200 p-4 rounded-xl mb-4 shadow-lg text-xs flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-triangle-exclamation text-base text-red-400"></i>
                 <span id="alert-message">Алдаа гарлаа.</span>
@@ -470,31 +304,16 @@
             <button onclick="hideAlert()" class="bg-red-800 hover:bg-red-700 px-2 py-1 rounded text-[10px] font-bold">Хаах</button>
         </div>
 
-        <!-- PDF Ачаалах дэлгэц -->
+        <!-- PDF Processing/Loading Overlay -->
         <div id="pdf-loading-overlay" class="no-print fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 flex-col">
             <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl max-w-sm w-full mx-4 text-center shadow-2xl">
                 <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-amber-500 border-t-transparent mb-4"></div>
-                <h3 class="text-lg font-bold text-white mb-2">PDF файл бэлтгэж байна...</h3>
-                <p class="text-xs text-slate-400 leading-relaxed">Цэсэн дэх зургуудыг өндөр чанартай нэгтгэн А4 PDF хэлбэрт хөрвүүлж байна. Түр хүлээнэ үү.</p>
+                <h3 id="pdf-loading-title" class="text-lg font-bold text-white mb-2">PDF файл бэлтгэж байна...</h3>
+                <p id="pdf-loading-desc" class="text-xs text-slate-400 leading-relaxed">Цэсэн дэх зургуудыг өндөр чанартай нэгтгэн А4 PDF хэлбэрт хөрвүүлж байна. Хэдэн секунд хүлээнэ үү.</p>
             </div>
         </div>
 
-        <!-- Устгах/Сэргээх гоёмсог интерактив поп-ап (Browser confirm оронд) -->
-        <div id="confirm-reset-modal" class="no-print fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl text-slate-100 text-center">
-                <div class="w-12 h-12 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto text-2xl mb-3">
-                    <i class="fa-solid fa-rotate-left"></i>
-                </div>
-                <h3 class="text-lg font-bold text-white mb-2">Цэс сэргээх үү?</h3>
-                <p class="text-xs text-slate-400 leading-relaxed mb-6">Та цэсээ анхны Солонгос хоолны хувилбар луу сэргээхийг зөвшөөрч байна уу? Таны оруулсан бүх засалт арилна.</p>
-                <div class="flex gap-2">
-                    <button onclick="confirmResetAction()" class="flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-xl transition text-xs">Тийм, сэргээх</button>
-                    <button onclick="closeResetModal()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-2 rounded-xl transition text-xs">Цуцлах</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Хэвлэх заавар поп-ап -->
+        <!-- Хэвлэх зааврын поп-ап мэдэгдэл -->
         <div id="print-guide-modal" class="no-print fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity duration-300">
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl text-slate-100">
                 <div class="text-center mb-4">
@@ -515,7 +334,7 @@
                     </div>
                     <div class="flex items-start gap-2.5">
                         <span class="bg-red-500 text-white font-bold w-4 h-4 rounded-full flex items-center justify-center text-[10px] mt-0.5">3</span>
-                        <p>Арын зураг (Background graphics): <b>Идэвхжүүлэх (Үнэн)</b></p>
+                        <p>Арын зураг (Background graphics): <b>Тийм / Идэвхжүүлэх</b></p>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -529,7 +348,7 @@
             </div>
         </div>
 
-        <!-- Зураг солих поп-ап -->
+        <!-- Зураг солих модал поп-ап -->
         <div id="image-edit-modal" class="no-print fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity duration-300">
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl text-slate-100">
                 <div class="flex items-center gap-3 mb-4">
@@ -567,409 +386,456 @@
             </div>
         </div>
 
-        <!-- Dynamic А4 Хуудаснууд байрлах сав -->
+        <!-- PDF хэвлэхэд зориулсан 2 хуудасны нэгдсэн багц -->
         <div id="pdf-container" class="flex flex-col gap-6 items-center">
-            <!-- Rendered А4 хуудаснууд Javascript-оор автоматаар энд үүснэ -->
+
+            <!-- А4 Хуудас 1 -->
+            <div id="a4-menu-sheet-1" class="a4-page p-[12mm] flex flex-col justify-between border-2 border-dashed border-red-600 text-stone-950 transition-colors duration-300">
+                <!-- Гоёл чимэглэлийн булангуудын хүрээ -->
+                <div class="corner-border-tl"></div>
+                <div class="corner-border-tr"></div>
+                <div class="corner-border-bl"></div>
+                <div class="corner-border-br"></div>
+
+                <!-- Толгой хэсэг -->
+                <div class="text-center relative z-10 pt-2">
+                    <div class="flex items-center justify-center mb-1">
+                        <span class="text-[10px] tracking-widest text-red-600 font-extrabold uppercase bg-red-100 px-3 py-1 rounded-full" contenteditable="true" id="tagline-1">
+                            K-Drama дээрх яг л тэр амт!
+                        </span>
+                    </div>
+                    
+                    <h1 class="text-4xl font-black tracking-tight flex items-center justify-center gap-1.5 my-1.5">
+                        <span contenteditable="true" id="brand-red" class="text-red-600 transition-colors font-serif italic">JanJa</span>
+                        <span contenteditable="true" id="brand-dark" class="text-stone-900 transition-colors">Myon</span>
+                    </h1>
+                    
+                    <div class="flex items-center justify-center gap-3 text-[11px] text-stone-800 font-bold" contenteditable="true" id="sub-headers">
+                        <span><i class="fa-solid fa-phone text-red-600 mr-1"></i> 9090-8772</span>
+                        <span>•</span>
+                        <span><i class="fa-solid fa-map-marker-alt text-red-600 mr-1"></i> 100 айл, BSB эсрэг тал</span>
+                        <span>•</span>
+                        <span><i class="fa-solid fa-clock text-red-600 mr-1"></i> 10:00 - 20:00</span>
+                    </div>
+
+                    <!-- Чимэглэл шугам -->
+                    <div class="flex items-center justify-center gap-2 mt-2">
+                        <div class="w-16 h-[1.5px] bg-red-600/40"></div>
+                        <i class="fa-solid fa-utensils text-red-600 text-[11px]"></i>
+                        <div class="w-16 h-[1.5px] bg-red-600/40"></div>
+                    </div>
+                </div>
+
+                <!-- Хоолны тор (Grid): Хуудас 1 -->
+                <div id="menu-grid" class="menu-grid-container grid grid-cols-2 gap-x-5 gap-y-3 my-3 relative z-10 flex-1 overflow-hidden items-stretch">
+                    <!-- Хоол 1 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="1">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://lh3.googleusercontent.com/d/12mmrZ4hkqtU9A6kzVdfQ9-vqnvKRnm0n" alt="Жантай Гоймон" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Janjamyon'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">1.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Жантай Гоймон</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">17,000₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Уламжлалт хар буурцгийн сүмстэй амтат гоймон.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 2 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="2">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://lh3.googleusercontent.com/d/1Tjse4It6GgDzYPNC97rZ0YMWQiG8r3cl" alt="Бугымбаб" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Bugymbap'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">2.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Бугымбаб</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">19,000₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Жантай, өндөгтэй хуурсан будаа.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 3 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="3">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://lh3.googleusercontent.com/d/1IRh-dC533BVmRrb5BPgXhfaBfkXFZIbT" alt="Бугжажан" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Bugjajang'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">3.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Бугжажан</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">21,800₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Тусгай жороор бэлтгэсэн амтат Жантай гоймонгийн сет.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 4 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="4">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://lh3.googleusercontent.com/d/1qvx0r3VOJf3q_TzJ7UU_VS19JvIYKACW" alt="Honey Garlic Chicken" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Chicken'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">4.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Honey Garlic Chicken</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                            </div>
+                            <p contenteditable="true" class="text-[9px] text-stone-700/90 font-semibold leading-none menu-item-desc">Зөгийн бал, сармистай чихэрлэг тахиа</p>
+                            <div class="flex justify-between items-center text-[10px] text-stone-800 font-bold mt-1">
+                                <span>M: 1 будаа, төмстэй</span>
+                                <span contenteditable="true" class="font-extrabold text-red-600 menu-item-price">24,000₮</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] text-stone-800 font-bold">
+                                <span>L: 2 будаа, төмстэй</span>
+                                <span contenteditable="true" class="font-extrabold text-red-600">40,000₮</span>
+                            </div>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 5 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="5">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://lh3.googleusercontent.com/d/1m0McF8JwscUYwKCfZrD8q4iyCULV78Ne" alt="Бүрж шарсан тахиа" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Fried+Chicken'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">5.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Бүрж шарсан тахиа</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                            </div>
+                            <p contenteditable="true" class="text-[9px] text-stone-700/90 font-semibold leading-none menu-item-desc">Амтат шаржигнуур Fried Chicken</p>
+                            <div class="flex justify-between items-center text-[10px] text-stone-800 font-bold mt-1">
+                                <span>M: 1 будаа, төмстэй</span>
+                                <span contenteditable="true" class="font-extrabold text-red-600 menu-item-price">22,000₮</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] text-stone-800 font-bold">
+                                <span>L: 2 будаа, төмстэй</span>
+                                <span contenteditable="true" class="font-extrabold text-red-600">38,000₮</span>
+                            </div>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 6 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="6">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://lh3.googleusercontent.com/d/1IwZ90chVrklFTmtD3QhdaG35uMC5eSKH" alt="Амтат Бууз" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Buuz'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">6.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Амтат Бууз (10ш)</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">20,000₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Хоний мах, сонгинотой амтат уурын бууз.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 7 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="7">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://lh3.googleusercontent.com/d/1OJCO817jK95p_zcrcPod3RobL4jUHbY-" alt="Бугжамён" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Bugjamyon'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">7.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Бугжамён</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">21,800₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Амтат хачир болон гоймонгийн хослол.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 8 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="8">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://lh3.googleusercontent.com/d/1z5nB22nM5DrRNpV7kxCqNtkchAtCUTvl" alt="Жампун" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Jampong'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">8.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Жампун</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">20,000₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Халуун ногоотой, далайн бүтээгдэхүүнтэй шөл.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 9 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="9">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://lh3.googleusercontent.com/d/1f3RcMLC5XsvLHo7nwPu4I09wEjJJS02h" alt="Жамжамён" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Jamjamyon'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">9.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Жамжамён</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">21,800₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Хоёр амтыг нэг дор! Жантай болон Жампун.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 10 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="10">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Tanjampong+Set" alt="Танжампун сэт" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Set'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">10.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Танжампун сэт</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">59,000₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Тансуюуг, Жанпун, Жантай гоймон * 3-4 хүний сэт</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 11 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="11">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Tansuyuk" alt="Тансуюуг" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Tansuyuk'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">11.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Тансуюуг</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                            </div>
+                            <p contenteditable="true" class="text-[9px] text-stone-700/90 font-semibold leading-none menu-item-desc">Чихэрлэг соустай шарсан гахайн мах</p>
+                            <div class="flex justify-between items-center text-[10px] text-stone-800 font-bold mt-1">
+                                <span>M: Нэг хүний порц</span>
+                                <span contenteditable="true" class="font-extrabold text-red-600 menu-item-price">24,000₮</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] text-stone-800 font-bold">
+                                <span>L: Хоёр хүний порц</span>
+                                <span contenteditable="true" class="font-extrabold text-red-600">46,000₮</span>
+                            </div>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 12 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="12">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Honchi+Jajang" alt="Хончи жажан" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Combo'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">12.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Хончи жажан</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">41,000₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Honey Garlick Chicken ба Жантай гоймон 2 хүн.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 13 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="13">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Bur+Jajang" alt="Бүр жажан" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Combo2'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">13.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Бүр жажан</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">39,000₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Бүрж шарсан тахиа ба Жантай гоймонгийн сет.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+
+                    <!-- Хоол 14 -->
+                    <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="14">
+                        <div class="menu-image-container w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative">
+                            <img src="https://placehold.co/400x300/a31e1e/ffffff?text=Tanjajang" alt="Танжажан" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f5f5f5/ef4444?text=Combo3'">
+                            <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-baseline justify-between gap-1">
+                                <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                    <span class="text-red-600 font-extrabold item-num">14.</span>
+                                    <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Танжажан</span>
+                                </h3>
+                                <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                                <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">57,000₮</span>
+                            </div>
+                            <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Тансүюг, жантай гоймон 2ш.</p>
+                        </div>
+                        <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                    </div>
+                </div>
+
+                <!-- Доод хэсэг (Урамшуулал & QR холбоос) - Эхний хуудас -->
+                <div id="page-1-footer" class="border-t-2 border-dashed border-red-600/30 pt-4 pb-1 relative z-10 mt-2">
+                    <div class="grid grid-cols-12 gap-3 items-center">
+                        
+                        <!-- Урамшууллын хэсэг -->
+                        <div class="col-span-8 flex items-start space-x-2.5">
+                            <div class="bg-red-600 text-white p-2 rounded-xl text-center flex-shrink-0 shadow-md">
+                                <span class="block text-lg font-black leading-none">9+1</span>
+                                <span class="text-[8px] uppercase tracking-wider font-extrabold">Урамшуулал</span>
+                            </div>
+                            <div>
+                                <h4 class="font-extrabold text-stone-950 text-xs" contenteditable="true" id="promo-title">9 + 1 УРАМШУУЛАЛ!</h4>
+                                <p class="text-[10px] text-stone-800 font-bold leading-normal mt-0.5" contenteditable="true" id="promo-desc">Та 9 удаа худалдан авалт хийгээд 10 дахь гоймонгоо ҮНЭГҮЙ аваарай. Манай байнгын үйлчлүүлэгч болоорой!</p>
+                            </div>
+                        </div>
+
+                        <!-- Хүргэлтийн мэдээлэл -->
+                        <div class="col-span-2 text-center border-l-2 border-stone-200">
+                            <h4 class="font-extrabold text-red-600 text-[10px] uppercase tracking-widest">Хүргэлт</h4>
+                            <p class="text-[9px] text-stone-900 font-bold mt-1 leading-normal" contenteditable="true" id="delivery-info">100 айл: 3к<br>Бусад: 5-7к</p>
+                        </div>
+
+                        <!-- QR код холбоос -->
+                        <div class="col-span-2 flex flex-col items-center justify-center relative">
+                            <div class="w-12 h-12 bg-white border-2 border-stone-200 rounded-xl p-1 shadow-sm relative group cursor-pointer" onclick="updateQRCodePrompt()">
+                                <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.facebook.com/profile.php?id=61577466385393" alt="QR Code" class="w-full h-full object-contain">
+                                <div class="no-print absolute inset-0 bg-black/85 text-white text-[7px] font-bold opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-center p-0.5">QR холбоос засах</div>
+                            </div>
+                            <span class="text-[8px] font-black text-stone-900 mt-1 uppercase tracking-wider whitespace-nowrap">Scan & Order</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Зохиогчийн эрх ба баталгаа -->
+                    <div class="text-center text-[9px] font-bold text-stone-600 mt-3" contenteditable="true" id="footer-text">
+                        &copy; 2026 JanJa Myon. Утас: 9090-8772 | Бүх эрх хуулиар хамгаалагдсан.
+                    </div>
+                </div>
+            </div>
+
+            <!-- А4 Хуудас 2 (Эхлээд нууцлагдсан байна) -->
+            <div id="a4-menu-sheet-2" class="a4-page p-[12mm] hidden flex-col justify-between border-2 border-dashed border-red-600 text-stone-950 transition-colors duration-300">
+                <!-- Гоёл чимэглэлийн булангуудын хүрээ -->
+                <div class="corner-border-tl"></div>
+                <div class="corner-border-tr"></div>
+                <div class="corner-border-bl"></div>
+                <div class="corner-border-br"></div>
+
+                <!-- Толгой хэсэг (Хуудас 2) -->
+                <div class="text-center relative z-10 pt-2">
+                    <h2 class="text-2xl font-black tracking-tight flex items-center justify-center gap-1.5 my-1.5">
+                        <span class="text-red-600 font-serif italic">JanJa Myon</span>
+                        <span class="text-stone-700 font-bold text-sm">— Цэсний үргэлжлэл —</span>
+                    </h2>
+                    
+                    <!-- Чимэглэл шугам -->
+                    <div class="flex items-center justify-center gap-2 mt-1">
+                        <div class="w-16 h-[1.5px] bg-red-600/40"></div>
+                        <i class="fa-solid fa-star text-red-600 text-[9px]"></i>
+                        <div class="w-16 h-[1.5px] bg-red-600/40"></div>
+                    </div>
+                </div>
+
+                <!-- Хоолны тор (Grid): Хуудас 2 -->
+                <div id="menu-grid-2" class="menu-grid-container grid grid-cols-2 gap-x-5 gap-y-3 my-3 relative z-10 flex-1 overflow-hidden items-stretch">
+                    <!-- 2 дахь хуудасны хоолнууд энд автоматаар орж ирнэ -->
+                </div>
+
+                <!-- Доод хэсэг (Хуудас 2) -->
+                <div id="page-2-footer" class="border-t-2 border-dashed border-red-600/30 pt-4 pb-1 relative z-10 text-center mt-2">
+                    <div class="flex justify-between items-center text-[11px] text-stone-900 font-bold px-4">
+                        <span><i class="fa-solid fa-phone text-red-600 mr-1"></i> Захиалга: 9090-8772</span>
+                        <span><i class="fa-solid fa-utensils text-red-600 mr-1"></i> Амтат Солонгос хоол</span>
+                        <span class="bg-red-100 text-red-600 px-3 py-0.5 rounded-full">Хуудас 2</span>
+                    </div>
+                    <div class="text-center text-[9px] font-bold text-stone-600 mt-3">
+                        &copy; 2026 JanJa Myon. Бүх эрх хуулиар хамгаалагдсан.
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
     <!-- Хэвлэх болон PDF татах уудам товчлуур - Гар утаснаас удирдах хурдан холбоосууд -->
     <div class="no-print fixed bottom-6 right-6 z-50 flex flex-col gap-3">
         <!-- PDF татах хурдан товчлуур -->
-        <div class="tooltip-container tooltip-top">
-            <button onclick="downloadAsPDF()" class="bg-amber-500 text-slate-950 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-amber-600 transition border-4 border-white" title="PDF хэлбэрээр татах">
-                <i class="fa-solid fa-file-pdf"></i>
-            </button>
-            <span class="tooltip-text">Оруулсан засалттай цэсийг шууд А4 PDF болгон гар утсандаа татах хурдан товчлуур.</span>
-        </div>
+        <button onclick="downloadAsPDF()" class="bg-amber-500 text-slate-950 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-amber-600 transition border-4 border-white" title="PDF хэлбэрээр татах">
+            <i class="fa-solid fa-file-pdf"></i>
+        </button>
         <!-- Хэвлэх хурдан товчлуур -->
-        <div class="tooltip-container tooltip-top">
-            <button onclick="triggerPrintWithGuide()" class="bg-red-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-red-700 transition border-4 border-white animate-pulse" title="А4 Хэвлэх">
-                <i class="fas fa-print"></i>
-            </button>
-            <span class="tooltip-text">Энэхүү цэсийг хэвлэх тохиргоо руу шууд илгээх хурдан товчлуур.</span>
-        </div>
+        <button onclick="triggerPrintWithGuide()" class="bg-red-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-red-700 transition border-4 border-white animate-pulse" title="А4 Хэвлэх">
+            <i class="fas fa-print"></i>
+        </button>
     </div>
 
+    <!-- Үндсэн логик болон тохиргооны скрипт -->
     <script>
-        // Бүх хоол болон цэсний үндсэн төлөв удирдах
+        // Идэвхтэй загвар болон тохиргооны хувьсагчид
         let currentTheme = 'red';
         let showImages = true;
         let isInkSaver = false;
         let isCompact = false;
-        let isTwoPages = true; 
-        let isVipMode = true; // VIP 2x2 Горим default байдлаар идэвхтэй байна
-        let imageSize = 100;
-        
-        // Unsplash өндөр чанартай Солонгос хоолны зургууд (Яг 14 хоол яг 2 нүүрэнд төгс таарна!)
-        let menuItems = [
-            { id: 1, name: "Жантай Гоймон", price: "17,000₮", desc: "Уламжлалт хар буурцгийн сүмстэй амтат гоймон.", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=500&q=80", tag: "best", isVip: false },
-            { id: 2, name: "Бугымбаб", price: "19,000₮", desc: "Жантай, өндөгтэй хуурсан будаа.", img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=500&q=80", tag: "", isVip: false },
-            { id: 3, name: "Бугжажан", price: "21,800₮", desc: "Тусгай жороор бэлтгэсэн амтат Жантай гоймонгийн сет.", img: "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=500&q=80", tag: "new", isVip: false },
-            { id: 4, name: "Honey Garlic Chicken", price: "24,000₮", desc: "Зөгийн бал, сармистай чихэрлэг тахиа.", img: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=500&q=80", tag: "best", isVip: false },
-            { id: 5, name: "Бүрж шарсан тахиа", price: "22,000₮", desc: "Амтат шаржигнуур Fried Chicken.", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=80", tag: "", isVip: false },
-            { id: 6, name: "Амтат Бууз (10ш)", price: "20,000₮", desc: "Хоний мах, сонгинотой амтат уурын бууз.", img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=500&q=80", tag: "", isVip: false },
-            { id: 7, name: "Бугжамён", price: "21,800₮", desc: "Амтат хачир болон гоймонгийн хослол.", img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?auto=format&fit=crop&w=500&q=80", tag: "", isVip: false },
-            { id: 8, name: "Жампун", price: "20,000₮", desc: "Халуун ногоотой, далайн бүтээгдэхүүнтэй шөл.", img: "https://images.unsplash.com/photo-1547928576-a4a33237eceb?auto=format&fit=crop&w=500&q=80", tag: "spicy", isVip: false },
-            { id: 9, name: "Жамжамён", price: "21,800₮", desc: "Хоёр амтыг нэг дор! Жантай болон Жампун гоймонгийн хослол.", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=500&q=80", tag: "", isVip: false },
-            { id: 10, name: "Танжампун сэт", price: "59,000₮", desc: "Тансуюуг, Жанпун, Жантай гоймон * 3-4 хүний сэт.", img: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=500&q=80", tag: "", isVip: false },
-            { id: 11, name: "Тансуюуг", price: "24,000₮", desc: "Чихэрлэг соустай шарсан гахайн мах.", img: "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=500&q=80", tag: "best", isVip: true },
-            { id: 12, name: "Хончи жажан", price: "41,000₮", desc: "Honey Garlic Chicken ба Жантай гоймон 2 хүний сет.", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=80", tag: "", isVip: true },
-            { id: 13, name: "Бүр жажан", price: "39,000₮", desc: "Бүрж шарсан тахиа ба Жантай гоймонгийн сет.", img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80", tag: "", isVip: true },
-            { id: 14, name: "Танжажан", price: "57,000₮", desc: "Тансүюг, жантай гоймон 2ш.", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80", tag: "", isVip: true }
-        ];
+        let isTwoPages = false; // Хуудасны төлөв хянах
 
-        // Эхний хувилбар луу сэргээх зориулалттай хуулбар
-        const defaultMenuItems = JSON.parse(JSON.stringify(menuItems));
-
-        let metadata = {
-            tagline: "K-Drama дээрх яг л тэр амт!",
-            brandRed: "JanJa",
-            brandDark: "Myon",
-            subHeaders: '<span><i class="fa-solid fa-phone text-red-600 mr-1"></i> 9090-8772</span><span>•</span><span><i class="fa-solid fa-map-marker-alt text-red-600 mr-1"></i> 100 айл, BSB эсрэг тал</span><span>•</span><span><i class="fa-solid fa-clock text-red-600 mr-1"></i> 10:00 - 20:00</span>',
-            promoTitle: "9 + 1 УРАМШУУЛАЛ!",
-            promoDesc: "Та 9 удаа худалдан авалт хийгээд 10 дахь гоймонгоо ҮНЭГҮЙ аваарай. Манай байнгын үйлчлүүлэгч болоорой!",
-            deliveryInfo: "100 айл: 3к<br>Бусад: 5-7к",
-            qrData: "https://www.facebook.com/profile.php?id=61577466385393",
-            footerText: "© 2026 JanJa Myon. Утас: 9090-8772 | Бүх эрх хуулиар хамгаалагдсан."
-        };
-
-        function updateMetadata(field, value) {
-            metadata[field] = value;
-        }
-
-        function updateItem(id, field, value) {
-            const item = menuItems.find(i => i.id === id);
-            if (item) {
-                item[field] = value;
-            }
-        }
-
-        // Хослол хуудаслах шинэ алгоритм (10 жижиг ба 4 VIP бүтэц)
-        function getPagesPartition() {
-            if (isVipMode) {
-                let pages = [];
-                let itemsCopy = [...menuItems];
-                let pageNum = 1;
-
-                while (itemsCopy.length > 0) {
-                    // Хэрэв VIP горим идэвхтэй бол:
-                    // 1-р хуудсанд 10 ширхэг "Жижиг" (isVip: false) хоол багтана.
-                    // 2-р хуудсанд 4 ширхэг "VIP" (isVip: true) хоол багтана.
-                    // Хэрэглэгч карт тус бүр дээрх "VIP / Энгийн" сонголтоор үүнийг тохируулна.
-                    let pageItems = [];
-                    if (pageNum === 1) {
-                        // Эхний хуудсанд зөвхөн "isVip: false" буюу жижиг хоолнуудаас хамгийн ихдээ 10-ыг авна.
-                        let count = 0;
-                        for (let i = 0; i < itemsCopy.length; i++) {
-                            if (!itemsCopy[i].isVip && count < 10) {
-                                pageItems.push(itemsCopy[i]);
-                                count++;
-                            }
-                        }
-                        // Хэрэв 10 хүрэхгүй бол үлдсэн хоолноос нь нөхөж авах
-                        if (pageItems.length < 10) {
-                            itemsCopy.forEach(item => {
-                                if (!pageItems.includes(item) && pageItems.length < 10) {
-                                    pageItems.push(item);
-                                }
-                            });
-                        }
-                    } else {
-                        // 2 болон бусад хуудсанд "isVip: true" буюу VIP хоолнуудыг яг 4 ширхэгээр тасалж оруулна.
-                        let count = 0;
-                        for (let i = 0; i < itemsCopy.length; i++) {
-                            if (itemsCopy[i].isVip && count < 4) {
-                                pageItems.push(itemsCopy[i]);
-                                count++;
-                            }
-                        }
-                        if (pageItems.length < 4) {
-                            itemsCopy.forEach(item => {
-                                if (!pageItems.includes(item) && pageItems.length < 4) {
-                                    pageItems.push(item);
-                                }
-                            });
-                        }
-                    }
-
-                    // Авсан хоолнуудаа үндсэн жагсаалтаас хасах
-                    itemsCopy = itemsCopy.filter(item => !pageItems.includes(item));
-                    
-                    pages.push({
-                        pageNum: pageNum,
-                        isVipPage: (pageNum % 2 === 0), // Тэгш хуудаснууд нь VIP 2x2 байна
-                        items: pageItems
-                    });
-                    pageNum++;
-
-                    // Хэрэв гогцооноос гарахгүй гацвал сэргийлэх хамгаалалт
-                    if (pageItems.length === 0) break;
-                }
-                return pages;
-            } else {
-                // Энгийн үед сонгогдсон хэмжээсээр тэгш хуваана
-                let pages = [];
-                let itemsCopy = [...menuItems];
-                let limit = isTwoPages ? (isCompact ? 10 : 6) : (isCompact ? 14 : 10);
-                let pageNum = 1;
-
-                while (itemsCopy.length > 0) {
-                    let pageItems = itemsCopy.splice(0, limit);
-                    pages.push({
-                        pageNum: pageNum,
-                        isVipPage: false,
-                        items: pageItems
-                    });
-                    pageNum++;
-                }
-                return pages;
-            }
-        }
-
-        function renderMenu() {
-            const container = document.getElementById('pdf-container');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const pages = getPagesPartition();
-            const totalPages = pages.length;
-
-            // Дээд хэсэгт хуудасны тоог харуулах
-            const pageIndicator = document.getElementById('page-indicator');
-            if (pageIndicator) {
-                pageIndicator.textContent = `${totalPages} А4 хуудас`;
-            }
-
-            pages.forEach((page, pageIndex) => {
-                const pageElement = document.createElement('div');
-                
-                // VIP эсвэл Энгийн загварын ангиллуудыг тохируулах
-                let modeClass = page.isVipPage ? 'vip-grid-mode' : (isTwoPages ? 'two-page-mode' : '');
-                pageElement.className = `a4-page p-[12mm] flex flex-col justify-between border-2 border-dashed border-red-600 text-stone-950 transition-colors duration-300 ${isCompact ? 'compact-mode' : ''} ${modeClass}`;
-                pageElement.id = `a4-menu-sheet-${page.pageNum}`;
-
-                // Өнгө болон бэх хэмнэх горимын тохиргоо
-                const activeColor = getActiveColor();
-                pageElement.style.borderColor = activeColor;
-                if (isInkSaver) {
-                    pageElement.style.backgroundColor = '#ffffff';
-                    pageElement.style.borderColor = '#000000';
-                }
-
-                // Гоёл чимэглэлийн булангийн хүрээ
-                pageElement.innerHTML = `
-                    <div class="corner-border-tl" style="border-color: ${isInkSaver ? '#000000' : activeColor}"></div>
-                    <div class="corner-border-tr" style="border-color: ${isInkSaver ? '#000000' : activeColor}"></div>
-                    <div class="corner-border-bl" style="border-color: ${isInkSaver ? '#000000' : activeColor}"></div>
-                    <div class="corner-border-br" style="border-color: ${isInkSaver ? '#000000' : activeColor}"></div>
-                `;
-
-                // Лого ба толгой хэсэг
-                const headerDiv = document.createElement('div');
-                headerDiv.className = "text-center relative z-10 pt-2";
-                if (page.pageNum === 1) {
-                    headerDiv.innerHTML = `
-                        <div class="flex items-center justify-center mb-1">
-                            <span class="text-[10px] tracking-widest text-red-600 font-extrabold uppercase bg-red-100 px-3 py-1 rounded-full ${isInkSaver ? 'text-black bg-gray-100' : ''}" contenteditable="true" onblur="updateMetadata('tagline', this.innerText)">
-                                ${metadata.tagline}
-                            </span>
-                        </div>
-                        <h1 class="text-4xl font-black tracking-tight flex items-center justify-center gap-1.5 my-1.5">
-                            <span contenteditable="true" onblur="updateMetadata('brandRed', this.innerText)" class="font-serif italic" style="color: ${isInkSaver ? '#000000' : (currentTheme === 'dark' ? '#44403c' : activeColor)}">${metadata.brandRed}</span>
-                            <span contenteditable="true" onblur="updateMetadata('brandDark', this.innerText)" class="text-stone-900">${metadata.brandDark}</span>
-                        </h1>
-                        <div class="flex items-center justify-center gap-3 text-[11px] text-stone-800 font-bold" contenteditable="true" onblur="updateMetadata('subHeaders', this.innerHTML)">
-                            ${metadata.subHeaders}
-                        </div>
-                        <div class="flex items-center justify-center gap-2 mt-2">
-                            <div class="w-16 h-[1.5px]" style="background-color: ${isInkSaver ? '#000000' : activeColor}40"></div>
-                            <i class="fa-solid fa-utensils text-[11px]" style="color: ${isInkSaver ? '#000000' : activeColor}"></i>
-                            <div class="w-16 h-[1.5px]" style="background-color: ${isInkSaver ? '#000000' : activeColor}40"></div>
-                        </div>
-                    `;
-                } else {
-                    // Дараагийн хуудсуудад зориулсан жижиг ухаалаг толгой
-                    headerDiv.innerHTML = `
-                        <h2 class="text-2xl font-black tracking-tight flex items-center justify-center gap-1.5 my-1.5">
-                            <span class="font-serif italic" style="color: ${isInkSaver ? '#000000' : activeColor}">JanJa Myon</span>
-                            <span class="text-stone-700 font-bold text-sm">— Цэсний үргэлжлэл (Хуудас ${page.pageNum}) —</span>
-                        </h2>
-                        <div class="flex items-center justify-center gap-2 mt-1">
-                            <div class="w-16 h-[1.5px]" style="background-color: ${isInkSaver ? '#000000' : activeColor}40"></div>
-                            <i class="fa-solid fa-star text-[9px]" style="color: ${isInkSaver ? '#000000' : activeColor}"></i>
-                            <div class="w-16 h-[1.5px]" style="background-color: ${isInkSaver ? '#000000' : activeColor}40"></div>
-                        </div>
-                    `;
-                }
-                pageElement.appendChild(headerDiv);
-
-                // Хоолны жагсаалт ба картоны сав
-                const gridDiv = document.createElement('div');
-                gridDiv.className = `menu-grid-container grid grid-cols-2 gap-x-5 gap-y-3 my-3 relative z-10 flex-1 overflow-hidden items-stretch`;
-                
-                // Энэ хуудасны хоолнуудын дугаарлалтыг эх сурвалж дахь индексээр тооцно
-                page.items.forEach((item) => {
-                    const globalIdx = menuItems.findIndex(i => i.id === item.id);
-                    const itemElement = document.createElement('div');
-                    itemElement.className = "menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group";
-                    itemElement.setAttribute('data-item-id', item.id);
-
-                    // Зургийн тохиргоо
-                    let imgStyle = showImages ? 'block' : 'none';
-                    let imgSizeStr = (page.isVipPage || isTwoPages) ? 'width: 100%; height: auto;' : `width: ${imageSize}px; height: ${imageSize}px;`;
-
-                    // Онцлох тэмдэглэгээ (Badges)
-                    let badgeHTML = '';
-                    if (item.tag === 'spicy') {
-                        badgeHTML = `<span class="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-black px-2 py-0.5 rounded-lg shadow-md z-20 flex items-center gap-1"><i class="fa-solid fa-pepper-hot text-[10px]"></i> ХАЛУУН</span>`;
-                    } else if (item.tag === 'best') {
-                        badgeHTML = `<span class="absolute top-2 left-2 bg-amber-500 text-stone-950 text-[9px] font-black px-2 py-0.5 rounded-lg shadow-md z-20 flex items-center gap-1"><i class="fa-solid fa-fire text-[10px]"></i> ОНЦЛОХ</span>`;
-                    } else if (item.tag === 'new') {
-                        badgeHTML = `<span class="absolute top-2 left-2 bg-blue-600 text-white text-[9px] font-black px-2 py-0.5 rounded-lg shadow-md z-20 flex items-center gap-1"><i class="fa-solid fa-star text-[10px]"></i> ШИНЭ</span>`;
-                    }
-
-                    // VIP/Энгийн сонгох товчны загвар
-                    let vipBadgeLabel = item.isVip 
-                        ? `<span class="text-[9px] text-amber-500 bg-amber-950 border border-amber-800 px-1.5 py-0.5 rounded-full font-bold ml-1">VIP</span>`
-                        : `<span class="text-[9px] text-slate-400 bg-slate-100 border border-slate-300 px-1.5 py-0.5 rounded-full font-bold ml-1">Жижиг</span>`;
-
-                    itemElement.innerHTML = `
-                        <div class="menu-image-container rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative" style="display: ${imgStyle}; ${imgSizeStr}">
-                            ${badgeHTML}
-                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80'">
-                            <button onclick="changeImageUrl(${item.id})" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
-                        </div>
-                        <div class="flex-1 min-w-0 flex flex-col justify-between h-full">
-                            <div>
-                                <div class="flex items-baseline justify-between gap-1">
-                                    <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
-                                        <span class="font-extrabold item-num" style="color: ${isInkSaver ? '#000000' : activeColor}">${globalIdx + 1}.</span>
-                                        <span contenteditable="true" onblur="updateItem(${item.id}, 'name', this.innerText)" class="menu-item-name font-bold text-stone-900">${item.name}</span>
-                                        <div class="no-print tooltip-container">
-                                            <button onclick="toggleItemSize(${item.id})" class="cursor-pointer focus:outline-none">
-                                                ${vipBadgeLabel}
-                                            </button>
-                                            <span class="tooltip-text">Энэ хоолны картыг VIP (том босоо) эсвэл Жижиг (хэвтээ жагсаалт) болгож сэлгэнэ.</span>
-                                        </div>
-                                    </h3>
-                                    <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
-                                    <span contenteditable="true" onblur="updateItem(${item.id}, 'price', this.innerText)" class="font-extrabold text-xs whitespace-nowrap menu-item-price" style="color: ${isInkSaver ? '#000000' : activeColor}">${item.price}</span>
-                                </div>
-                                <p contenteditable="true" onblur="updateItem(${item.id}, 'desc', this.innerText)" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">${item.desc}</p>
-                            </div>
-                        </div>
-
-                        <!-- Хоолыг Дээш/Доош шилжүүлэх болон устгах удирдлагууд (No-print) -->
-                        <div class="no-print absolute right-1.5 bottom-1.5 opacity-0 group-hover:opacity-100 transition flex items-center gap-1 z-30">
-                            <!-- VIP / Жижиг солих товчлуурууд -->
-                            <div class="tooltip-container tooltip-top">
-                                <button onclick="toggleItemSize(${item.id})" class="bg-amber-100 hover:bg-amber-200 text-amber-900 text-[10px] font-bold px-1.5 py-1 rounded-md border shadow flex items-center gap-1" title="Картны хэмжээ өөрчлөх">
-                                    <i class="fa-solid fa-crop-simple"></i> Сэлгэх
-                                </button>
-                                <span class="tooltip-text">Картны загвар солих</span>
-                            </div>
-                            <!-- Spicy/Best badget сонгох -->
-                            <div class="tooltip-container tooltip-top">
-                                <button onclick="toggleItemTag(${item.id})" class="bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold p-1 rounded-md border shadow" title="Тэмдэглэгээ солих">
-                                    <i class="fa-solid fa-tags"></i>
-                                </button>
-                                <span class="tooltip-text">Онцлох тэмдэг тавих (Халуун, шинэ, онцлох)</span>
-                            </div>
-                            <div class="tooltip-container tooltip-top">
-                                <button onclick="moveItemUp(${globalIdx})" class="bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold p-1 rounded-md border shadow" title="Дээш шилжүүлэх">
-                                    <i class="fa-solid fa-arrow-up"></i>
-                                </button>
-                                <span class="tooltip-text">Дарааллыг урагшлуулна</span>
-                            </div>
-                            <div class="tooltip-container tooltip-top">
-                                <button onclick="moveItemDown(${globalIdx})" class="bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold p-1 rounded-md border shadow" title="Доош шилжүүлэх">
-                                    <i class="fa-solid fa-arrow-down"></i>
-                                </button>
-                                <span class="tooltip-text">Дарааллыг ухраана</span>
-                            </div>
-                            <div class="tooltip-container tooltip-top">
-                                <button onclick="deleteMenuItem(${item.id})" class="bg-red-100 hover:bg-red-600 hover:text-white text-red-600 text-[10px] font-bold p-1 rounded-md border shadow" title="Устгах">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                                <span class="tooltip-text">Цэснээс устгах</span>
-                            </div>
-                        </div>
-                    `;
-                    gridDiv.appendChild(itemElement);
-                });
-                pageElement.appendChild(gridDiv);
-
-                const footerDiv = document.createElement('div');
-                if (pageIndex === totalPages - 1) {
-                    // Зөвхөн ХАМГИЙН СҮҮЛЧИЙН хуудасны доор урамшуулал, хүргэлт, QR байрлана
-                    footerDiv.className = "border-t-2 border-dashed border-red-600/30 pt-4 pb-1 relative z-10 mt-2";
-                    footerDiv.style.borderColor = isInkSaver ? '#000000' : activeColor + '30';
-                    footerDiv.innerHTML = `
-                        <div class="grid grid-cols-12 gap-3 items-center text-stone-950">
-                            <!-- Урамшуулал -->
-                            <div class="col-span-8 flex items-start space-x-2.5">
-                                <div class="text-white p-2 rounded-xl text-center flex-shrink-0 shadow-md animate-pulse" style="background-color: ${isInkSaver ? '#000000' : activeColor}">
-                                    <span class="block text-lg font-black leading-none">9+1</span>
-                                    <span class="text-[8px] uppercase tracking-wider font-extrabold">Урамшуулал</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-extrabold text-stone-950 text-xs" contenteditable="true" onblur="updateMetadata('promoTitle', this.innerText)">${metadata.promoTitle}</h4>
-                                    <p class="text-[10px] text-stone-800 font-bold leading-normal mt-0.5" contenteditable="true" onblur="updateMetadata('promoDesc', this.innerText)">${metadata.promoDesc}</p>
-                                </div>
-                            </div>
-
-                            <!-- Хүргэлтийн мэдээлэл -->
-                            <div class="col-span-2 text-center border-l-2 border-stone-200">
-                                <h4 class="font-extrabold text-[10px] uppercase tracking-widest" style="color: ${isInkSaver ? '#000000' : activeColor}">Хүргэлт</h4>
-                                <p class="text-[9px] text-stone-900 font-bold mt-1 leading-normal" contenteditable="true" onblur="updateMetadata('deliveryInfo', this.innerHTML)">${metadata.deliveryInfo}</p>
-                            </div>
-
-                            <!-- QR код -->
-                            <div class="col-span-2 flex flex-col items-center justify-center relative">
-                                <div class="w-12 h-12 bg-white border-2 border-stone-200 rounded-xl p-1 shadow-sm relative group cursor-pointer" onclick="updateQRCodePrompt()">
-                                    <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(metadata.qrData)}" alt="QR Code" class="w-full h-full object-contain">
-                                    <div class="no-print absolute inset-0 bg-black/85 text-white text-[7px] font-bold opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-center p-0.5">QR холбоос засах</div>
-                                </div>
-                                <span class="text-[8px] font-black text-stone-900 mt-1 uppercase tracking-wider whitespace-nowrap">Scan & Order</span>
-                            </div>
-                        </div>
-
-                        <!-- Зохиогчийн эрх -->
-                        <div class="text-center text-[9px] font-bold text-stone-600 mt-3" contenteditable="true" onblur="updateMetadata('footerText', this.innerText)">
-                            ${metadata.footerText}
-                        </div>
-                    `;
-                } else {
-                    // Бусад хуудасны доор байрлах хуудаслалтын тэмдэглэгээ
-                    footerDiv.className = "border-t-2 border-dashed border-red-600/30 pt-4 pb-1 relative z-10 text-center mt-2";
-                    footerDiv.style.borderColor = isInkSaver ? '#000000' : activeColor + '30';
-                    footerDiv.innerHTML = `
-                        <div class="flex justify-between items-center text-[11px] text-stone-900 font-bold px-4">
-                            <span><i class="fa-solid fa-phone mr-1" style="color: ${isInkSaver ? '#000000' : activeColor}"></i> Захиалга: 9090-8772</span>
-                            <span><i class="fa-solid fa-utensils mr-1" style="color: ${isInkSaver ? '#000000' : activeColor}"></i> Амтат Солонгос хоол</span>
-                            <span class="px-3 py-0.5 rounded-full" style="background-color: ${isInkSaver ? '#f3f4f6' : activeColor + '15'}; color: ${isInkSaver ? '#000000' : activeColor}">Хуудас ${page.pageNum} / ${totalPages}</span>
-                        </div>
-                        <div class="text-center text-[9px] font-bold text-stone-600 mt-3">
-                            ${metadata.footerText}
-                        </div>
-                    `;
-                }
-                pageElement.appendChild(footerDiv);
-
-                container.appendChild(pageElement);
-            });
-        }
-
-        function getActiveColor() {
-            const colorMap = {
-                'red': '#dc2626',
-                'dark': '#1c1917',
-                'gold': '#d97706'
-            };
-            return colorMap[currentTheme] || '#dc2626';
-        }
-
+        // Найдвартай хэвлэх функц
         function triggerPrintWithGuide() {
             const modal = document.getElementById('print-guide-modal');
             if (modal) modal.classList.remove('hidden');
@@ -985,6 +851,7 @@
             }, 150);
         }
 
+        // Custom Notification Alert
         function showAlert(msg) {
             const box = document.getElementById('custom-alert');
             const txt = document.getElementById('alert-message');
@@ -1000,183 +867,228 @@
             if (box) box.classList.add('hidden');
         }
 
+        /* ============================================================
+           CORS-SAFE ЗУРАГ УДИРДАХ (PDF-ийн "tainted canvas" алдааг засна)
+           ------------------------------------------------------------
+           Асуудал: Google Drive (lh3.googleusercontent.com), болон бусад
+           гадаад зурагны сервер browser-т зохих CORS header илгээдэггүй.
+           Иймд html2canvas зургийг canvas дээр буулгахад "tainted" (бохирдсон)
+           төлөвт орж, PDF үүсгэх үед SecurityError шидээд бүтэлгүйтдэг.
+           Шийдэл: татаж авахын өмнө бүх гадаад зургийг images.weserv.nl
+           CORS-proxy-ээр дамжуулж, зөв CORS header-тэй болгож солино.
+           PDF үүссэний дараа эх URL рүү нь буцаана (edit хийхэд саадгүй).
+        ============================================================ */
+        const CORS_IMAGE_PROXY = 'https://images.weserv.nl/?url=';
+
+        function toProxiedImageUrl(url) {
+            if (!url || url.startsWith('data:') || url.includes('images.weserv.nl')) return url;
+            try {
+                const withoutProtocol = url.replace(/^https?:\/\//i, '');
+                return CORS_IMAGE_PROXY + encodeURIComponent(withoutProtocol) + '&n=-1';
+            } catch (e) {
+                return url;
+            }
+        }
+
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const testImg = new Image();
+                testImg.crossOrigin = 'anonymous';
+                testImg.onload = () => resolve(src);
+                testImg.onerror = () => reject(new Error('load-failed'));
+                testImg.src = src;
+            });
+        }
+
+        // PDF-д зориулж бүх зургийг CORS-safe хувилбар руу түр сольж, амжилттай ачаалахыг хүлээнэ
+        async function prepareImagesForExport() {
+            const imgs = Array.from(document.querySelectorAll('#pdf-container img'));
+            await Promise.all(imgs.map(async (img) => {
+                const original = img.getAttribute('src');
+                img.dataset.originalSrc = original;
+
+                // Аль хэдийн data: URL бол шууд орхино
+                if (!original || original.startsWith('data:')) return;
+
+                const proxied = toProxiedImageUrl(original);
+                try {
+                    // Эхлээд proxy-гоор ачаалж үзнэ (хамгийн найдвартай)
+                    await loadImage(proxied);
+                    img.crossOrigin = 'anonymous';
+                    img.src = proxied;
+                } catch (e) {
+                    try {
+                        // Proxy амжилтгүй бол шууд CORS горимоор дахин оролдоно
+                        const bust = original + (original.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+                        await loadImage(bust);
+                        img.crossOrigin = 'anonymous';
+                        img.src = bust;
+                    } catch (e2) {
+                        // Бүр амжилтгүй бол орон нутгийн placeholder-т сольж canvas бохирдохоос сэргийлнэ
+                        img.crossOrigin = null;
+                        img.src = 'https://placehold.co/400x300/f5f5f5/999999?text=No+Image';
+                    }
+                }
+            }));
+        }
+
+        // PDF үүссэний дараа эх зургийн URL-уудыг сэргээнэ
+        function restoreImagesAfterExport() {
+            const imgs = Array.from(document.querySelectorAll('#pdf-container img'));
+            imgs.forEach(img => {
+                if (img.dataset.originalSrc) {
+                    img.src = img.dataset.originalSrc;
+                    img.removeAttribute('crossorigin');
+                    delete img.dataset.originalSrc;
+                }
+            });
+        }
+
+        // PDF хэлбэрээр шууд хөрвүүлэн татах ухаалаг үйлдэл (html2pdf integration)
         async function downloadAsPDF() {
             hideAlert();
             const loader = document.getElementById('pdf-loading-overlay');
+            const loadingTitle = document.getElementById('pdf-loading-title');
+            const loadingDesc = document.getElementById('pdf-loading-desc');
             if (loader) {
                 loader.classList.remove('hidden');
                 loader.classList.add('flex');
             }
+            if (loadingTitle) loadingTitle.textContent = 'Зургуудыг бэлтгэж байна...';
+            if (loadingDesc) loadingDesc.textContent = 'Цэсэн дэх зургуудыг PDF-д зориулж уншиж байна. Хэдэн секунд хүлээнэ үү.';
 
             const element = document.getElementById('pdf-container');
-            
-            const opt = {
-                margin:       0,
-                filename:     'JanJa_Myon_Auto_A4_Menu.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { 
-                    scale: 2.2, // Crisp rendering
-                    useCORS: true, 
-                    logging: false,
-                    letterRendering: true
-                },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak:    { mode: ['css', 'legacy'] }
-            };
 
             try {
+                // 1) Бүх зургийг CORS-safe болгож бэлдэнэ (tainted canvas алдааг эндээс засна)
+                await prepareImagesForExport();
+
+                if (loadingTitle) loadingTitle.textContent = 'PDF файл бэлтгэж байна...';
+                if (loadingDesc) loadingDesc.textContent = 'Цэсэн дэх зургуудыг өндөр чанартай нэгтгэн А4 PDF хэлбэрт хөрвүүлж байна.';
+
+                const opt = {
+                    margin:       0,
+                    filename:     isTwoPages ? 'JanJa_Myon_Double_Page_Menu.pdf' : 'JanJa_Myon_Single_Page_Menu.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  {
+                        scale: 2.5, // Өндөр нягтралтай (crisp text)
+                        useCORS: true,
+                        logging: false,
+                        letterRendering: true,
+                        imageTimeout: 15000,
+                        allowTaint: false // proxy-той хослуулаад аюулгүй PDF гаргана
+                    },
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                    pagebreak:    { mode: ['css', 'legacy'] } // Хуудас тасралтыг ухаалгаар тооцно
+                };
+
                 await html2pdf().set(opt).from(element).save();
             } catch (error) {
                 console.error("PDF generation error: ", error);
-                showAlert("PDF татахад алдаа гарлаа. Зургийн зөвшөөрөл дутуу байж магадгүй.");
+                showAlert("PDF файл хөрвүүлэхэд алдаа гарлаа. Интернэт холболтоо шалгаад дахин оролдоно уу. Асуудал давтагдвал зургуудаа өөр URL-ээр (жишээ нь шууд .jpg/.png линк) сольж үзнэ үү.");
             } finally {
+                // 2) Эх зургийн URL-уудыг буцаана (editor-т ажиллагаа хэвийн үргэлжилнэ)
+                restoreImagesAfterExport();
                 if (loader) {
                     loader.classList.add('hidden');
                     loader.classList.remove('flex');
                 }
+                if (loadingTitle) loadingTitle.textContent = 'PDF файл бэлтгэж байна...';
+                if (loadingDesc) loadingDesc.textContent = 'Цэсэн дэх зургуудыг өндөр чанартай нэгтгэн А4 PDF хэлбэрт хөрвүүлж байна. Хэдэн секунд хүлээнэ үү.';
             }
         }
 
-        function toggleVipMode() {
-            isVipMode = !isVipMode;
-            const vipBtnText = document.getElementById('vip-btn-text');
-            const vipBtnIcon = document.getElementById('vip-btn-icon');
-            const vipBtn = document.getElementById('btn-toggle-vip');
-
-            if (isVipMode) {
-                if (vipBtnText) vipBtnText.textContent = "VIP 2х2 Горим (Идэвхтэй)";
-                if (vipBtnIcon) vipBtnIcon.className = "fa-solid fa-gem text-yellow-300";
-                if (vipBtn) {
-                    vipBtn.classList.remove('bg-slate-800', 'border-slate-700');
-                    vipBtn.classList.add('bg-amber-600', 'border-amber-500');
-                }
-                imageSize = 100;
-                document.getElementById('image-size-slider').value = 100;
-                document.getElementById('image-size-val').textContent = '100px';
-            } else {
-                if (vipBtnText) vipBtnText.textContent = "VIP 2х2 Горим";
-                if (vipBtnIcon) vipBtnIcon.className = "fa-regular fa-gem text-slate-400";
-                if (vipBtn) {
-                    vipBtn.classList.add('bg-slate-800', 'border-slate-700');
-                    vipBtn.classList.remove('bg-amber-600', 'border-amber-500');
-                }
-            }
-
-            renderMenu();
-        }
-
+        // 1 эсвэл 2 хуудастай загварыг сэлгэх ухаалаг систем
         function togglePageCount() {
             isTwoPages = !isTwoPages;
+            const grid1 = document.getElementById('menu-grid');
+            const grid2 = document.getElementById('menu-grid-2');
+            const page2 = document.getElementById('a4-menu-sheet-2');
             const btnText = document.getElementById('page-btn-text');
             const btnIcon = document.getElementById('page-btn-icon');
             const slider = document.getElementById('image-size-slider');
 
-            // Хэрэв жагсаалт руу шилжвэл VIP горимыг унтраана
-            if (isVipMode && !isTwoPages) {
-                isVipMode = false;
-                const vipBtnText = document.getElementById('vip-btn-text');
-                const vipBtnIcon = document.getElementById('vip-btn-icon');
-                const vipBtn = document.getElementById('btn-toggle-vip');
-                if (vipBtnText) vipBtnText.textContent = "VIP 2х2 Горим";
-                if (vipBtnIcon) vipBtnIcon.className = "fa-regular fa-gem text-slate-400";
-                if (vipBtn) {
-                    vipBtn.classList.add('bg-slate-800', 'border-slate-700');
-                    vipBtn.classList.remove('bg-amber-600', 'border-amber-500');
-                }
-            }
+            const allItems = Array.from(document.querySelectorAll('.menu-item'));
 
             if (isTwoPages) {
-                if (btnText) btnText.textContent = "Жагсаалт загвар (Хэвтээ)";
-                if (btnIcon) btnIcon.className = "fa-solid fa-list text-emerald-400";
+                // 2 Хуудастай болгох
+                document.body.classList.add('two-page-mode');
+                if (page2) {
+                    page2.classList.remove('hidden');
+                    page2.classList.add('flex');
+                }
+                if (btnText) btnText.textContent = "1 Хуудастай болгох";
+                if (btnIcon) btnIcon.className = "fa-solid fa-file-invoice text-emerald-400";
+
+                // Слайдерыг том хэмжээ рүү шилжүүлж зурагнуудыг томруулна
                 if (slider) {
                     slider.value = 100;
-                    imageSize = 100;
+                    changeImageSize(100);
                 }
+
+                // Хоолыг 2 хуудас руу хувааж байрлуулна (эхний хагасыг хуудас 1-т, бусдыг хуудас 2-т)
+                const splitIndex = Math.ceil(allItems.length / 2);
+                allItems.forEach((item, index) => {
+                    if (index < splitIndex) {
+                        if (grid1) grid1.appendChild(item);
+                    } else {
+                        if (grid2) grid2.appendChild(item);
+                    }
+                });
             } else {
-                if (btnText) btnText.textContent = "Карт загвар (Босоо)";
-                if (btnIcon) btnIcon.className = "fa-solid fa-shapes text-amber-400";
+                // 1 Хуудастай болгох
+                document.body.classList.remove('two-page-mode');
+                if (page2) {
+                    page2.classList.add('hidden');
+                    page2.classList.remove('flex');
+                }
+                if (btnText) btnText.textContent = "2 Хуудастай болгох";
+                if (btnIcon) btnIcon.className = "fa-solid fa-file-invoice text-amber-400";
+
+                // Слайдерыг хэвийн хэмжээнд буцаана
                 if (slider) {
                     slider.value = 68;
-                    imageSize = 68;
+                    changeImageSize(68);
                 }
+
+                // Бүх хоолнуудыг хуудас 1-ийн хүснэгт рүү буцаан зэргэцүүлнэ
+                allItems.forEach(item => {
+                    if (grid1) grid1.appendChild(item);
+                });
             }
 
-            const displayVal = document.getElementById('image-size-val');
-            if (displayVal) displayVal.textContent = imageSize + 'px';
-
-            renderMenu();
+            recalculateItemNumbers();
+            applyThemeStyles();
         }
 
-        // Хоолны хэмжээг VIP / Жижиг болгон солих ухаалаг үйлдэл
-        function toggleItemSize(itemId) {
-            const item = menuItems.find(i => i.id === itemId);
-            if (item) {
-                item.isVip = !item.isVip;
-                renderMenu();
-            }
-        }
-
-        function moveItemUp(index) {
-            if (index <= 0) return;
-            const temp = menuItems[index];
-            menuItems[index] = menuItems[index - 1];
-            menuItems[index - 1] = temp;
-            renderMenu();
-        }
-
-        function moveItemDown(index) {
-            if (index >= menuItems.length - 1) return;
-            const temp = menuItems[index];
-            menuItems[index] = menuItems[index + 1];
-            menuItems[index + 1] = temp;
-            renderMenu();
-        }
-
-        function toggleItemTag(itemId) {
-            const item = menuItems.find(i => i.id === itemId);
-            if (item) {
-                if (!item.tag) item.tag = 'spicy';
-                else if (item.tag === 'spicy') item.tag = 'best';
-                else if (item.tag === 'best') item.tag = 'new';
-                else item.tag = '';
-                renderMenu();
-            }
-        }
-
-        function openResetModal() {
-            const modal = document.getElementById('confirm-reset-modal');
-            if (modal) modal.classList.remove('hidden');
-        }
-
-        function closeResetModal() {
-            const modal = document.getElementById('confirm-reset-modal');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function confirmResetAction() {
-            menuItems = JSON.parse(JSON.stringify(defaultMenuItems));
-            closeResetModal();
-            renderMenu();
-        }
-
+        // Зургийн хэмжээг Слайдераар динамик удирдах
         function changeImageSize(val) {
-            imageSize = val;
             const displayVal = document.getElementById('image-size-val');
             if (displayVal) displayVal.textContent = val + 'px';
-            
             const imgContainers = document.querySelectorAll('.menu-image-container');
+            
             imgContainers.forEach(container => {
-                if (!isTwoPages && !isVipMode) {
+                if (isTwoPages) {
+                    // 2 Хуудастай үед ухаалаг aspect-ratio ашиглах тул өндрийг автоматаар удирдуулна
+                    container.style.width = '100%';
+                    container.style.height = 'auto';
+                } else {
                     container.style.width = val + 'px';
                     container.style.height = val + 'px';
                 }
             });
         }
 
+        // Зураг харуулах/нуух
         function toggleImages() {
             showImages = !showImages;
+            const images = document.querySelectorAll('.menu-image-container');
             const btnText = document.getElementById('img-btn-text');
             const btnIcon = document.getElementById('img-btn-icon');
+
+            images.forEach(img => {
+                img.style.display = showImages ? 'block' : 'none';
+            });
 
             if (showImages) {
                 if (btnText) btnText.textContent = "Зураг нуух";
@@ -1185,13 +1097,38 @@
                 if (btnText) btnText.textContent = "Зураг харуулах";
                 if (btnIcon) btnIcon.className = "fa-solid fa-image-slash text-slate-400";
             }
-            renderMenu();
         }
 
+        // Бэх хэмнэх горим
         function toggleInkSaver() {
             isInkSaver = !isInkSaver;
+            const page1 = document.getElementById('a4-menu-sheet-1');
+            const page2 = document.getElementById('a4-menu-sheet-2');
             const btnText = document.getElementById('ink-btn-text');
             const btnIcon = document.getElementById('ink-btn-icon');
+            
+            const pages = [page1, page2];
+
+            pages.forEach(page => {
+                if (!page) return;
+                if (isInkSaver) {
+                    page.classList.add('bg-white');
+                    page.style.backgroundColor = '#ffffff';
+                    page.style.borderColor = '#000000';
+                    
+                    document.querySelectorAll('.text-red-600').forEach(el => el.classList.add('text-black'));
+                    document.querySelectorAll('.border-red-600').forEach(el => el.classList.add('border-black'));
+                    document.querySelectorAll('.corner-border-tl, .corner-border-tr, .corner-border-bl, .corner-border-br').forEach(el => {
+                        el.style.borderColor = '#000000';
+                    });
+                } else {
+                    page.classList.remove('bg-white');
+                    page.style.backgroundColor = '#fbfaf7';
+                    document.querySelectorAll('.text-red-600').forEach(el => el.classList.remove('text-black'));
+                    document.querySelectorAll('.border-red-600').forEach(el => el.classList.remove('border-black'));
+                    applyThemeStyles();
+                }
+            });
 
             if (isInkSaver) {
                 if (btnText) btnText.textContent = "Бэх хэвийн";
@@ -1200,56 +1137,158 @@
                 if (btnText) btnText.textContent = "Бэх хэмнэх";
                 if (btnIcon) btnIcon.className = "fa-solid fa-droplet-slash text-yellow-400";
             }
-            renderMenu();
         }
 
+        // Шахсан буюу Compact Mode
         function toggleCompactMode() {
             isCompact = !isCompact;
+            const page1 = document.getElementById('a4-menu-sheet-1');
+            const page2 = document.getElementById('a4-menu-sheet-2');
+            const btn = document.getElementById('btn-toggle-compact');
             const btnText = document.getElementById('compact-btn-text');
             const btnIcon = document.getElementById('compact-btn-icon');
+            
+            const pages = [page1, page2];
+
+            pages.forEach(page => {
+                if (!page) return;
+                if (isCompact) {
+                    page.classList.add('compact-mode');
+                } else {
+                    page.classList.remove('compact-mode');
+                }
+            });
 
             if (isCompact) {
+                if (btn) btn.classList.add('bg-blue-900', 'text-white');
                 if (btnText) btnText.textContent = "Хэвийн горим";
                 if (btnIcon) btnIcon.className = "fa-solid fa-expand text-blue-400";
             } else {
+                if (btn) btn.classList.remove('bg-blue-900', 'text-white');
                 if (btnText) btnText.textContent = "Шахсан горим";
                 if (btnIcon) btnIcon.className = "fa-solid fa-compress text-blue-400";
             }
-            renderMenu();
         }
 
+        // Загвар өөрчлөх
         function changeTheme(theme) {
             currentTheme = theme;
-            renderMenu();
+            applyThemeStyles();
         }
 
+        function applyThemeStyles() {
+            if (isInkSaver) return; 
+
+            const page1 = document.getElementById('a4-menu-sheet-1');
+            const page2 = document.getElementById('a4-menu-sheet-2');
+            const corners = document.querySelectorAll('.corner-border-tl, .corner-border-tr, .corner-border-bl, .corner-border-br');
+            const brandRed = document.getElementById('brand-red');
+            const brandDark = document.getElementById('brand-dark');
+            const prices = document.querySelectorAll('.menu-item-price');
+
+            const colorMap = {
+                'red': '#dc2626',
+                'dark': '#1c1917',
+                'gold': '#d97706'
+            };
+
+            const selectedColor = colorMap[currentTheme] || '#dc2626';
+
+            if (page1) page1.style.borderColor = selectedColor;
+            if (page2) page2.style.borderColor = selectedColor;
+            document.documentElement.style.setProperty('--theme-color', selectedColor);
+            corners.forEach(el => el.style.borderColor = selectedColor);
+
+            if (currentTheme === 'red') {
+                if (brandRed) brandRed.style.color = '#dc2626';
+                if (brandDark) brandDark.style.color = '#1c1917';
+                prices.forEach(p => p.style.color = '#dc2626');
+            } else if (currentTheme === 'dark') {
+                if (brandRed) brandRed.style.color = '#44403c';
+                if (brandDark) brandDark.style.color = '#1c1917';
+                prices.forEach(p => p.style.color = '#1c1917');
+            } else if (currentTheme === 'gold') {
+                if (brandRed) brandRed.style.color = '#d97706';
+                if (brandDark) brandDark.style.color = '#78350f';
+                prices.forEach(p => p.style.color = '#d97706');
+            }
+        }
+
+        // Шинэ хоол нэмэх үйлдэл
         function addNewMenuItem() {
+            const grid = isTwoPages ? document.getElementById('menu-grid-2') : document.getElementById('menu-grid');
+            if (!grid) return;
             const newId = Date.now();
-            menuItems.push({
-                id: newId,
-                name: "Шинэ хоолны нэр",
-                price: "15,000₮",
-                desc: "Хоолны товч амтлаг тайлбар болон орц.",
-                img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80",
-                tag: "",
-                isVip: false
+            const allItemsCount = document.querySelectorAll('.menu-item').length + 1;
+            const slider = document.getElementById('image-size-slider');
+            const currentImgSize = slider ? slider.value : 68;
+
+            const itemHTML = `
+                <div class="menu-item flex items-start gap-2.5 bg-white p-2 rounded-xl border border-transparent hover:border-red-100 relative group" data-item-id="${newId}">
+                    <div class="menu-image-container w-[${currentImgSize}px] h-[${currentImgSize}px] rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 border border-stone-200 shadow-sm relative" style="width: ${currentImgSize}px; height: ${currentImgSize}px;">
+                        <img src="https://placehold.co/100x100/f5f5f5/ef4444?text=New+Dish" alt="Шинэ хоол" class="w-full h-full object-cover">
+                        <button onclick="changeImageUrl(this)" class="no-print absolute inset-0 bg-black/60 text-white text-[9px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center font-bold">Солих</button>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline justify-between gap-1">
+                            <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
+                                <span class="text-red-600 font-extrabold item-num">${allItemsCount}.</span>
+                                <span contenteditable="true" class="menu-item-name font-bold text-stone-900">Шинэ хоолны нэр</span>
+                            </h3>
+                            <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
+                            <span contenteditable="true" class="font-extrabold text-red-600 text-xs whitespace-nowrap menu-item-price">15,000₮</span>
+                        </div>
+                        <p contenteditable="true" class="text-[10px] text-stone-700/90 font-semibold leading-snug mt-1 menu-item-desc">Хоолны товч амтлаг тайлбар болон орц.</p>
+                    </div>
+                    <button onclick="deleteMenuItem(this)" class="no-print absolute -top-1 -right-1 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition shadow" title="Устгах">×</button>
+                </div>
+            `;
+
+            grid.insertAdjacentHTML('beforeend', itemHTML);
+            
+            if (!showImages) {
+                const lastItem = grid.lastElementChild;
+                if (lastItem) {
+                    const imgContainer = lastItem.querySelector('.menu-image-container');
+                    if (imgContainer) imgContainer.style.display = 'none';
+                }
+            }
+            
+            recalculateItemNumbers();
+            applyThemeStyles();
+            changeImageSize(currentImgSize);
+        }
+
+        // Хоол устгах
+        function deleteMenuItem(button) {
+            const menuItem = button.closest('.menu-item');
+            if (menuItem) {
+                menuItem.remove();
+                recalculateItemNumbers();
+            }
+        }
+
+        // Дугаарлалтыг автоматаар шинэчлэх
+        function recalculateItemNumbers() {
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach((item, index) => {
+                const numSpan = item.querySelector('.item-num');
+                if (numSpan) {
+                    numSpan.textContent = `${index + 1}.`;
+                }
             });
-            renderMenu();
         }
 
-        function deleteMenuItem(id) {
-            menuItems = menuItems.filter(item => item.id !== id);
-            renderMenu();
-        }
-
-        // --- Google Drive Link Хөрвүүлэгч ---
-        let activeImageItemId = null;
+        // --- Зургийн Линк болон Google Drive ухаалаг хөрвүүлэгчийн хэсэг ---
+        let activeImgElement = null;
 
         function convertGoogleDriveLink(url) {
             if (!url) return url;
             url = url.trim();
+            
             const reg1 = /\/file\/d\/([a-zA-Z0-9_-]+)/;
             const reg2 = /[?&]id=([a-zA-Z0-9_-]+)/;
+            
             const match = url.match(reg1) || url.match(reg2);
             if (match && match[1]) {
                 return `https://lh3.googleusercontent.com/d/${match[1]}`;
@@ -1257,13 +1296,16 @@
             return url;
         }
 
-        function changeImageUrl(itemId) {
-            activeImageItemId = itemId;
-            const item = menuItems.find(i => i.id === itemId);
+        function changeImageUrl(button) {
+            const img = button.previousElementSibling;
+            if (!img) return;
+            
+            activeImgElement = img;
             const input = document.getElementById('modal-image-input');
-            if (input && item) {
-                input.value = item.img.startsWith('https://images.unsplash.com') ? '' : item.img;
+            if (input) {
+                input.value = img.src.startsWith('https://placehold.co') ? '' : img.src;
             }
+            
             const modal = document.getElementById('image-edit-modal');
             if (modal) {
                 modal.classList.remove('hidden');
@@ -1276,32 +1318,36 @@
             if (modal) {
                 modal.classList.add('hidden');
             }
-            activeImageItemId = null;
+            activeImgElement = null;
         }
 
         function saveModalImage() {
             const input = document.getElementById('modal-image-input');
-            if (input && activeImageItemId !== null) {
+            if (input && activeImgElement) {
                 let newUrl = input.value;
                 if (newUrl && newUrl.trim() !== '') {
-                    updateItem(activeImageItemId, 'img', convertGoogleDriveLink(newUrl));
+                    activeImgElement.src = convertGoogleDriveLink(newUrl);
                 }
             }
             closeImageModal();
-            renderMenu();
         }
 
+        // QR код засах
         function updateQRCodePrompt() {
-            const newUrl = prompt("QR кодоор уншуулахад очих холбоосыг оруулна уу:", metadata.qrData);
+            const currentQRUrl = "https://www.facebook.com/profile.php?id=61577466385393";
+            const newUrl = prompt("QR кодоор уншуулахад очих холбоосыг оруулна уу (Вэбсайт эсвэл Фэйсбүүк хуудас):", currentQRUrl);
+            
             if (newUrl !== null && newUrl.trim() !== "") {
-                metadata.qrData = newUrl;
-                renderMenu();
+                const qrImg = document.getElementById('qr-code-img');
+                if (qrImg) {
+                    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(newUrl)}`;
+                }
             }
         }
 
         window.onload = function() {
             document.documentElement.style.setProperty('--theme-color', '#dc2626');
-            renderMenu();
+            applyThemeStyles();
         };
     </script>
 </body>
