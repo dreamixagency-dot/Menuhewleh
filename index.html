@@ -299,6 +299,41 @@
             border-bottom: 3px solid var(--theme-color, #dc2626);
             border-right: 3px solid var(--theme-color, #dc2626);
         }
+
+        /* 💡 Хялбар Tooltip систем */
+        .tooltip-container {
+            position: relative;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: -155%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #020617; /* Slate-950 */
+            border: 1.5px solid #334155;
+            color: #f8fafc;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            line-height: 1.3;
+            width: max-content;
+            max-width: 220px;
+            z-index: 9999;
+            pointer-events: none;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltip-top .tooltip-text {
+            bottom: 125% !important;
+            top: auto !important;
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
@@ -307,13 +342,13 @@
     <header class="no-print bg-slate-950 text-white shadow-2xl border-b border-slate-800 sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center space-x-3">
-                <div class="bg-red-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl shadow-lg shadow-red-600/30">
+                <div class="bg-red-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl shadow-lg shadow-red-600/30 animate-pulse">
                     JJ
                 </div>
                 <div>
                     <h1 class="text-base font-bold tracking-tight flex items-center gap-2">
                         <span>JanJa Myon</span> 
-                        <span class="text-[10px] text-amber-400 bg-amber-950/50 border border-amber-800 px-2 py-0.5 rounded-full font-bold">VIP 4-Card System</span>
+                        <span class="text-[10px] text-amber-400 bg-amber-950/50 border border-amber-800 px-2 py-0.5 rounded-full font-bold animate-bounce">VIP 4-Card System</span>
                     </h1>
                     <p class="text-[11px] text-slate-400">Хуудас бүрт яг 4 том карт багтана</p>
                 </div>
@@ -322,66 +357,92 @@
             <!-- Загвар, Хэмжээ удирдах тохиргоонууд -->
             <div class="flex flex-wrap items-center gap-2">
                 <!-- VIP 2х2 Загвар шилжүүлэгч -->
-                <button onclick="toggleVipMode()" id="btn-toggle-vip" class="bg-amber-600 hover:bg-amber-500 text-white text-xs px-3 py-2 rounded-lg border border-amber-500 transition flex items-center gap-1.5 font-bold" title="2х2 Тансаг горим болон энгийн горим сэлгэх">
-                    <i id="vip-btn-icon" class="fa-solid fa-gem text-yellow-300"></i>
-                    <span id="vip-btn-text">VIP 2х2 Горим (Идэвхтэй)</span>
-                </button>
+                <div class="tooltip-container">
+                    <button onclick="toggleVipMode()" id="btn-toggle-vip" class="bg-amber-600 hover:bg-amber-500 text-white text-xs px-3 py-2 rounded-lg border border-amber-500 transition flex items-center gap-1.5 font-bold" title="2х2 Тансаг горим болон энгийн горим сэлгэх">
+                        <i id="vip-btn-icon" class="fa-solid fa-gem text-yellow-300"></i>
+                        <span id="vip-btn-text">VIP 2х2 Горим (Идэвхтэй)</span>
+                    </button>
+                    <span class="tooltip-text">Тэгш тоотой хуудсуудыг А4-ийг 4 хуваасан маш том зурагтай VIP карт хэлбэртэй болгоно.</span>
+                </div>
 
                 <!-- Хуудасны тоо сонгох -->
-                <button onclick="togglePageCount()" id="btn-toggle-pages" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5 font-bold" title="Босоо карт болон Хэвтээ жагсаалт горим сэлгэх">
-                    <i id="page-btn-icon" class="fa-solid fa-shapes text-amber-400"></i>
-                    <span id="page-btn-text">Карт загвар (Босоо)</span>
-                </button>
+                <div class="tooltip-container">
+                    <button onclick="togglePageCount()" id="btn-toggle-pages" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5 font-bold" title="Босоо карт болон Хэвтээ жагсаалт горим сэлгэх">
+                        <i id="page-btn-icon" class="fa-solid fa-shapes text-amber-400"></i>
+                        <span id="page-btn-text">Карт загвар (Босоо)</span>
+                    </button>
+                    <span class="tooltip-text">Энгийн хуудсуудыг хэвтээ жагсаалт эсвэл 2 баганатай босоо карт загвартай болгоно.</span>
+                </div>
 
                 <!-- Зургийн хэмжээ тохируулагч Слайдер -->
-                <div class="flex items-center gap-2 bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 text-xs font-semibold">
-                    <span class="text-slate-400">Зургийн хэмжээ:</span>
+                <div class="tooltip-container flex items-center gap-2 bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 text-xs font-semibold">
+                    <span class="text-slate-400 font-bold">Зургийн хэмжээ:</span>
                     <input type="range" id="image-size-slider" min="50" max="120" value="100" oninput="changeImageSize(this.value)" class="w-20 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
                     <span id="image-size-val" class="text-[10px] text-amber-400 font-bold min-w-[32px]">100px</span>
+                    <span class="tooltip-text">Жижиг картны зургийн өндөр, өргөнийг слайдераар гараар томруулж жижигрүүлнэ.</span>
                 </div>
 
                 <!-- Зургийн удирдлага -->
-                <button onclick="toggleImages()" id="btn-toggle-images" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Цэсний зургуудыг нууж зай хэмнэх">
-                    <i id="img-btn-icon" class="fa-regular fa-image text-emerald-400"></i>
-                    <span id="img-btn-text">Зураг нуух</span>
-                </button>
+                <div class="tooltip-container">
+                    <button onclick="toggleImages()" id="btn-toggle-images" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Цэсний зургуудыг нууж зай хэмнэх">
+                        <i id="img-btn-icon" class="fa-regular fa-image text-emerald-400"></i>
+                        <span id="img-btn-text">Зураг нуух</span>
+                    </button>
+                    <span class="tooltip-text">Бүх зургийг нууж зөвхөн текстийг харуулна. Ингэснээр цаасны хэмжээс болон хэвлэгчийн бэх хэмнэнэ.</span>
+                </div>
 
                 <!-- Бэх хэмнэгч -->
-                <button onclick="toggleInkSaver()" id="btn-toggle-ink" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Арын хээг арилгаж, хэвлэгчийн бэх хэмнэх">
-                    <i id="ink-btn-icon" class="fa-solid fa-droplet-slash text-yellow-400"></i>
-                    <span id="ink-btn-text">Бэх хэмнэх</span>
-                </button>
+                <div class="tooltip-container">
+                    <button onclick="toggleInkSaver()" id="btn-toggle-ink" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Арын хээг арилгаж, хэвлэгчийн бэх хэмнэх">
+                        <i id="ink-btn-icon" class="fa-solid fa-droplet-slash text-yellow-400"></i>
+                        <span id="ink-btn-text">Бэх хэмнэх</span>
+                    </button>
+                    <span class="tooltip-text">Цэсний сүүн ivory арын дэвсгэрийг цагаан өнгөтэй болгож, хар-цагаан хэвлэгчээр хэвлэхэд бэх хэмнэнэ.</span>
+                </div>
 
                 <!-- Хэмжээ агшаах (Compact Mode) -->
-                <button onclick="toggleCompactMode()" id="btn-toggle-compact" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Олон хоол нэг хуудсанд багтаах">
-                    <i id="compact-btn-icon" class="fa-solid fa-compress text-blue-400"></i>
-                    <span id="compact-btn-text">Шахсан горим</span>
-                </button>
+                <div class="tooltip-container">
+                    <button onclick="toggleCompactMode()" id="btn-toggle-compact" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Олон хоол нэг хуудсанд багтаах">
+                        <i id="compact-btn-icon" class="fa-solid fa-compress text-blue-400"></i>
+                        <span id="compact-btn-text">Шахсан горим</span>
+                    </button>
+                    <span class="tooltip-text">Картуудын дотоод зай болон тайлбар текстийг хурааж, нэг А4 хуудаст илүү олон хоол багтаана.</span>
+                </div>
 
                 <!-- Өнгөний Сэдэв сонгох -->
-                <div class="flex items-center space-x-1.5 bg-slate-800 p-1 rounded-lg border border-slate-700">
+                <div class="tooltip-container flex items-center space-x-1.5 bg-slate-800 p-1 rounded-lg border border-slate-700">
                     <button onclick="changeTheme('red')" class="w-5 h-5 rounded-full bg-red-600 border border-white focus:ring-2 focus:ring-offset-2 focus:ring-red-500" title="Улаан уламжлалт"></button>
                     <button onclick="changeTheme('dark')" class="w-5 h-5 rounded-full bg-stone-950 border border-stone-700 focus:ring-2 focus:ring-offset-2 focus:ring-stone-500" title="Тансаг хар"></button>
                     <button onclick="changeTheme('gold')" class="w-5 h-5 rounded-full bg-amber-600 border border-amber-400 focus:ring-2 focus:ring-offset-2 focus:ring-amber-500" title="Амтат алтан шар"></button>
+                    <span class="tooltip-text">Цэсний угалз, хүрээ болон үнийн өнгийг хүссэн загвараараа солино.</span>
                 </div>
 
                 <!-- Шинэ хоол нэмэх -->
-                <button onclick="addNewMenuItem()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-2 rounded-lg transition flex items-center gap-1.5 font-bold">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>Хоол нэмэх</span>
-                </button>
+                <div class="tooltip-container">
+                    <button onclick="addNewMenuItem()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-2 rounded-lg transition flex items-center gap-1.5 font-bold">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Хоол нэмэх</span>
+                    </button>
+                    <span class="tooltip-text">Цэсний хамгийн сүүлд шинэ хоол нэмэх бөгөөд хуудасны хэмжээнээс хэтэрвэл ухаалгаар дараагийн хуудсанд шилжүүлнэ.</span>
+                </div>
 
                 <!-- PDF татах товчлуур -->
-                <button onclick="downloadAsPDF()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-extrabold transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
-                    <i class="fa-solid fa-file-pdf text-lg"></i>
-                    <span>PDF Татах</span>
-                </button>
+                <div class="tooltip-container">
+                    <button onclick="downloadAsPDF()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-extrabold transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
+                        <i class="fa-solid fa-file-pdf text-lg"></i>
+                        <span>PDF Татах</span>
+                    </button>
+                    <span class="tooltip-text">Таны оруулсан засалттай А4 цэсийг өндөр чанартай (High-DPI) PDF файл болгон хадгалж авна.</span>
+                </div>
 
                 <!-- Хэвлэх товч -->
-                <button onclick="triggerPrintWithGuide()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-extrabold transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
-                    <i class="fa-solid fa-print text-base"></i>
-                    <span>А4 Хэвлэх</span>
-                </button>
+                <div class="tooltip-container">
+                    <button onclick="triggerPrintWithGuide()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs px-4 py-2 rounded-lg font-extrabold transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
+                        <i class="fa-solid fa-print text-base"></i>
+                        <span>А4 Хэвлэх</span>
+                    </button>
+                    <span class="tooltip-text">Шууд хэвлэгч төхөөрөмж рүү илгээх заавар бүхий цонхыг нээнэ.</span>
+                </div>
             </div>
         </div>
     </header>
@@ -394,7 +455,10 @@
                 <i class="fa-solid fa-circle-info text-amber-400 text-sm"></i>
                 <span>Цэсний хэмжээ: <b id="page-indicator" class="text-amber-400">1 А4 хуудас</b>. Хэрэв хоол нэмэгдвэл дараагийн А4 хуудас автоматаар үүснэ.</span>
             </div>
-            <button onclick="openResetModal()" class="bg-red-950 text-red-400 border border-red-900/50 hover:bg-red-900 hover:text-white px-2.5 py-1 rounded text-[10px] font-bold transition">Эхнийх шиг болгох</button>
+            <div class="tooltip-container tooltip-top">
+                <button onclick="openResetModal()" class="bg-red-950 text-red-400 border border-red-900/50 hover:bg-red-900 hover:text-white px-2.5 py-1 rounded text-[10px] font-bold transition">Эхнийх шиг болгох</button>
+                <span class="tooltip-text">Оруулсан бүх өөрчлөлтийг арилгаж анхны Солонгос хоолны цэсний хэвэнд буцаан оруулна.</span>
+            </div>
         </div>
 
         <!-- Алдааны мэдэгдэл -->
@@ -512,13 +576,19 @@
     <!-- Хэвлэх болон PDF татах уудам товчлуур - Гар утаснаас удирдах хурдан холбоосууд -->
     <div class="no-print fixed bottom-6 right-6 z-50 flex flex-col gap-3">
         <!-- PDF татах хурдан товчлуур -->
-        <button onclick="downloadAsPDF()" class="bg-amber-500 text-slate-950 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-amber-600 transition border-4 border-white" title="PDF хэлбэрээр татах">
-            <i class="fa-solid fa-file-pdf"></i>
-        </button>
+        <div class="tooltip-container tooltip-top">
+            <button onclick="downloadAsPDF()" class="bg-amber-500 text-slate-950 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-amber-600 transition border-4 border-white" title="PDF хэлбэрээр татах">
+                <i class="fa-solid fa-file-pdf"></i>
+            </button>
+            <span class="tooltip-text">Оруулсан засалттай цэсийг шууд А4 PDF болгон гар утсандаа татах хурдан товчлуур.</span>
+        </div>
         <!-- Хэвлэх хурдан товчлуур -->
-        <button onclick="triggerPrintWithGuide()" class="bg-red-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-red-700 transition border-4 border-white animate-pulse" title="А4 Хэвлэх">
-            <i class="fas fa-print"></i>
-        </button>
+        <div class="tooltip-container tooltip-top">
+            <button onclick="triggerPrintWithGuide()" class="bg-red-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-xl hover:bg-red-700 transition border-4 border-white animate-pulse" title="А4 Хэвлэх">
+                <i class="fas fa-print"></i>
+            </button>
+            <span class="tooltip-text">Энэхүү цэсийг хэвлэх тохиргоо руу шууд илгээх хурдан товчлуур.</span>
+        </div>
     </div>
 
     <script>
@@ -776,9 +846,12 @@
                                     <h3 class="font-bold text-stone-900 text-xs tracking-tight truncate flex items-center gap-1">
                                         <span class="font-extrabold item-num" style="color: ${isInkSaver ? '#000000' : activeColor}">${globalIdx + 1}.</span>
                                         <span contenteditable="true" onblur="updateItem(${item.id}, 'name', this.innerText)" class="menu-item-name font-bold text-stone-900">${item.name}</span>
-                                        <button onclick="toggleItemSize(${item.id})" class="no-print cursor-pointer focus:outline-none" title="VIP болон Жижиг хэмжээг солих">
-                                            ${vipBadgeLabel}
-                                        </button>
+                                        <div class="no-print tooltip-container">
+                                            <button onclick="toggleItemSize(${item.id})" class="cursor-pointer focus:outline-none">
+                                                ${vipBadgeLabel}
+                                            </button>
+                                            <span class="tooltip-text">Энэ хоолны картыг VIP (том босоо) эсвэл Жижиг (хэвтээ жагсаалт) болгож сэлгэнэ.</span>
+                                        </div>
                                     </h3>
                                     <div class="h-[1px] flex-1 border-b border-dotted border-stone-400"></div>
                                     <span contenteditable="true" onblur="updateItem(${item.id}, 'price', this.innerText)" class="font-extrabold text-xs whitespace-nowrap menu-item-price" style="color: ${isInkSaver ? '#000000' : activeColor}">${item.price}</span>
@@ -790,22 +863,37 @@
                         <!-- Хоолыг Дээш/Доош шилжүүлэх болон устгах удирдлагууд (No-print) -->
                         <div class="no-print absolute right-1.5 bottom-1.5 opacity-0 group-hover:opacity-100 transition flex items-center gap-1 z-30">
                             <!-- VIP / Жижиг солих товчлуурууд -->
-                            <button onclick="toggleItemSize(${item.id})" class="bg-amber-100 hover:bg-amber-200 text-amber-900 text-[10px] font-bold px-1.5 py-1 rounded-md border shadow flex items-center gap-1" title="Картны хэмжээ өөрчлөх">
-                                <i class="fa-solid fa-crop-simple"></i> Сэлгэх
-                            </button>
+                            <div class="tooltip-container tooltip-top">
+                                <button onclick="toggleItemSize(${item.id})" class="bg-amber-100 hover:bg-amber-200 text-amber-900 text-[10px] font-bold px-1.5 py-1 rounded-md border shadow flex items-center gap-1" title="Картны хэмжээ өөрчлөх">
+                                    <i class="fa-solid fa-crop-simple"></i> Сэлгэх
+                                </button>
+                                <span class="tooltip-text">Картны загвар солих</span>
+                            </div>
                             <!-- Spicy/Best badget сонгох -->
-                            <button onclick="toggleItemTag(${item.id})" class="bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold p-1 rounded-md border shadow" title="Тэмдэглэгээ солих">
-                                <i class="fa-solid fa-tags"></i>
-                            </button>
-                            <button onclick="moveItemUp(${globalIdx})" class="bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold p-1 rounded-md border shadow" title="Дээш шилжүүлэх">
-                                <i class="fa-solid fa-arrow-up"></i>
-                            </button>
-                            <button onclick="moveItemDown(${globalIdx})" class="bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold p-1 rounded-md border shadow" title="Доош шилжүүлэх">
-                                <i class="fa-solid fa-arrow-down"></i>
-                            </button>
-                            <button onclick="deleteMenuItem(${item.id})" class="bg-red-100 hover:bg-red-600 hover:text-white text-red-600 text-[10px] font-bold p-1 rounded-md border shadow" title="Устгах">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
+                            <div class="tooltip-container tooltip-top">
+                                <button onclick="toggleItemTag(${item.id})" class="bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold p-1 rounded-md border shadow" title="Тэмдэглэгээ солих">
+                                    <i class="fa-solid fa-tags"></i>
+                                </button>
+                                <span class="tooltip-text">Онцлох тэмдэг тавих (Халуун, шинэ, онцлох)</span>
+                            </div>
+                            <div class="tooltip-container tooltip-top">
+                                <button onclick="moveItemUp(${globalIdx})" class="bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold p-1 rounded-md border shadow" title="Дээш шилжүүлэх">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                </button>
+                                <span class="tooltip-text">Дарааллыг урагшлуулна</span>
+                            </div>
+                            <div class="tooltip-container tooltip-top">
+                                <button onclick="moveItemDown(${globalIdx})" class="bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold p-1 rounded-md border shadow" title="Доош шилжүүлэх">
+                                    <i class="fa-solid fa-arrow-down"></i>
+                                </button>
+                                <span class="tooltip-text">Дарааллыг ухраана</span>
+                            </div>
+                            <div class="tooltip-container tooltip-top">
+                                <button onclick="deleteMenuItem(${item.id})" class="bg-red-100 hover:bg-red-600 hover:text-white text-red-600 text-[10px] font-bold p-1 rounded-md border shadow" title="Устгах">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                                <span class="tooltip-text">Цэснээс устгах</span>
+                            </div>
                         </div>
                     `;
                     gridDiv.appendChild(itemElement);
